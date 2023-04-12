@@ -37,11 +37,11 @@ export class Receipt {
 }
 
 export class ReceiptItem {
-    id = "";
-    description = "";
-    cost = new Money()
-    amount = 0;
-    constructor(id = "", description = "", cost = new Money(), amount = 0) {
+    id: string;
+    description: string;
+    cost: Money;
+    amount: number;
+    constructor(id = "", description = "", type = ReceiptItemTypes[0], cost = new Money(), amount = 0) {
         this.id = id;
         this.description = description;
         this.cost = cost;
@@ -49,7 +49,6 @@ export class ReceiptItem {
     }
     public total = () => { return this.cost.multiply(this.amount) }
     public totalToString = () => {
-        console.log('%s * %d = %s',this.cost, this.amount, this.total()) 
         return this.total().toString() }
 }
 

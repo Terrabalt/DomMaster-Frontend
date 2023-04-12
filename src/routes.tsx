@@ -7,12 +7,14 @@ import Layout from "./pages/Layout";
 import ListReceipts from './pages/ListReceipts';
 import ViewReceipt from './pages/ViewReceipt';
 import EditReceipt from './pages/EditReceipt';
+import ErrorPage from './pages/ErrorPage';
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />} >
+          <Route path="/error" element={<ErrorPage />} />
           <Route index element={<Overview />} />
           <Route path="/receipts"> 
             <Route index element={<ListReceipts />}/>

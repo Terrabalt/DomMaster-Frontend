@@ -1,7 +1,7 @@
 import React from 'react';
 import { Receipt } from '../dataclass';
 import { ReceiptItemRow } from './ReceiptItemRow';
-import DatePicker from 'react-date-picker';
+import {FormattedDate} from 'react-intl';
 
 interface Props {
     receipt: Receipt;
@@ -9,18 +9,9 @@ interface Props {
 export default function ReceiptTable({receipt}:Props) {  
     return (
     <div>
-      <DatePicker
-        disabled = {true}
-        disableCalendar = {true}
-        calendarAriaLabel="Toggle calendar"
-        dayAriaLabel="Day"
-        monthAriaLabel="Month"
-        nativeInputAriaLabel="Date"
-        value={receipt.date}
-        yearAriaLabel="Year"
-      />
-      <table aria-label="sticky table">
-        <caption>Receipt {receipt.title || "#00"}</caption>
+      <caption>{receipt.title || "#00"}</caption>
+      <FormattedDate value={receipt.date} day='2-digit' month='long' year='numeric'/>
+      <table aria-label="sticky table">  
         <thead>
           <tr>
             <th>Description</th>

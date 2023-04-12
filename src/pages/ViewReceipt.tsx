@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate, redirect, useNavigate, useParams } from 'react-router-dom';
 import { Receipt } from '../dataclass';
 import { getReceipt } from '../data/database';
 
@@ -10,17 +10,22 @@ import ReceiptTable from '../components/ReceiptTable';
 function ViewReceipt() {
   const navigate = useNavigate()
   const { id } = useParams()
-  const [receipt, setReceipt] = useState<Receipt>(new Receipt());
+  const [receipt, setReceipt] = useState<Receipt | undefined>(undefined);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     getReceipt(Number(id)).then(v => {
       setReceipt(v);
+      return undefined
+    }, e => {
+      return e
+    }).then(() => {
       setLoading(false)
     })
   }, [])
 
   if (isLoading) return <>Loading...</>
+  if (receipt === undefined) return <Navigate to="/error"/>
   return (
     <div>
       <Link to="..">return</Link>

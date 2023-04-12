@@ -3,20 +3,9 @@ body {
   background-color: #9cc68b;
 }
 
-#content {
+#content, #header {
   align-content: center;
-  size: 100%;
-  padding: 10px;
-  margin: 0 auto;
-  border: 2px solid #e2825d;
-  border-radius: 9px;
-  background-color: #86a1e0;
-  color: black;
-}
-
-#header {
-  align-content: center;
-  width: 100%;
+  width: calc(100% - 20px);
   padding: 10px;
   margin: 0 auto;
   border: 2px solid #e2825d;

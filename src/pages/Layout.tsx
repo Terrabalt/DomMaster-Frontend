@@ -1,10 +1,12 @@
 import React from 'react';
 import {Link, Outlet} from 'react-router-dom';
 import '../css/index.css';
+import { IntlProvider } from 'react-intl';
 
 export default function Layout() {
+
     return (
-      <div>
+      <IntlProvider locale={navigator.language}>
         <div id={"header"}>
           <center>
             <h1>appname</h1>
@@ -20,6 +22,6 @@ export default function Layout() {
             <Outlet/>
           </center>
         </div>
-      </div>
+      </IntlProvider>
     )
 }

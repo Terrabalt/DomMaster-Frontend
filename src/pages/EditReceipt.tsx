@@ -26,6 +26,7 @@ export default function EditReceipt() {
       <button
         id='finish-edit'
         onClick={() => {
+          if (receipt.title.trim() == "" || receipt.items.length == 0) return;
           updateReceipt(Number(id), receipt).then(()=>{
             navigate(-1);
           })

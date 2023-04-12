@@ -16,6 +16,7 @@ function AddReceipt() {
       <button
         id='finish-add'
         onClick={() => {
+          if (receipt.title.trim() == "" || receipt.items.length == 0) return;
           addReceipt(receipt).then(()=>{
             navigate(-1);
           })

@@ -7,14 +7,23 @@ interface Props {
   onDelete?: () => void;
 }
 
-export function EditableReceiptItemRow({ item, onDelete }: Props) {
+export function EditableReceiptItemRow({ item, onEdit, onDelete }: Props) {
   return (
     <tr>
       <th>{item.description}</th>
       <th>{item.cost.toString()}</th>
       <th>{item.amount}</th>
       <th>{item.totalToString()}</th>
-      <th><button onClick={() => onDelete? onDelete() : {}}>x</button></th>
+      {
+        onEdit ? (
+          <th><button onClick={() => onEdit()}>edit</button></th>
+        ) : null
+      }
+      {
+        onDelete ? (
+          <th><button onClick={() => onDelete()}>x</button></th>
+        ) : null
+      }
     </tr>
   );
 }

@@ -17,7 +17,7 @@ export default function EditableReceiptTable({receipt, onChange}:Props) {
       onChange(new Receipt(receipt.id, receipt.title, items, receipt.date))
     }
     function addNewItem(newItem: ReceiptItem) {
-      if (newItem.description === "" || newItem.amount === 0) return
+      if (newItem.description === "" || newItem.amount === 0 || newItem.total().amount === BigInt(0)) return
       const items = [...receipt.items]
       items.push(newItem)
       onChange(new Receipt(receipt.id, receipt.title, items, receipt.date))
@@ -31,19 +31,28 @@ export default function EditableReceiptTable({receipt, onChange}:Props) {
               
     return (
     <div>
-      <DatePicker
-        calendarAriaLabel="Toggle calendar"
-        dayAriaLabel="Day"
-        monthAriaLabel="Month"
-        nativeInputAriaLabel="Date"
-        value={receipt.date}
-        onChange={date => { 
-          if (date) 
-            changeDate(date as Date)
-        }}
-        yearAriaLabel="Year"
-      />
-      <div>Receipt <input value={receipt.title} onChange={(e) => changeTitle(e.target.value)}/></div>
+      <h2>New Receipt</h2>
+      <div>
+        <label>Title:
+          <input value={receipt.title} onChange={(e) => changeTitle(e.target.value)}/>
+        </label>
+      </div>
+      <div>
+        <label>Date:
+          <DatePicker
+            calendarAriaLabel="Toggle calendar"
+            dayAriaLabel="Day"
+            monthAriaLabel="Month"
+            nativeInputAriaLabel="Date"
+            value={receipt.date}
+            onChange={date => { 
+              if (date) 
+                changeDate(date as Date)
+            }}
+            yearAriaLabel="Year"
+          />
+        </label>
+      </div>
       <table aria-label="sticky table">
         <thead>
           <tr>
@@ -59,10 +68,7 @@ export default function EditableReceiptTable({receipt, onChange}:Props) {
                 receipt.items.map((v, i) => (
                   <EditableReceiptItemRow item={v} key={i} onDelete={() => deleteItem(i)}/>
                 ))
-              : ( 
-                <>
-                </>
-              )
+              : null
             }
             <NewReceiptItemRow onAdd={(newItem) => addNewItem(newItem)}/>
             <tr>
