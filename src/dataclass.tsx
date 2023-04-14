@@ -89,7 +89,7 @@ export class Money {
   }
   public toString = () : string => {
     const full = this.amount / BigInt(100);
-    const fraction = this.amount - (full * BigInt(100));
+    const fraction = Math.abs(Number(this.amount - (full * BigInt(100))));
     return `${CurrencySymbol(this.currency)}${full},${fraction}`
   }
   public multiply = (times: number) : Money => {
