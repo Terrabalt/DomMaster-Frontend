@@ -10,6 +10,7 @@ export function ReceiptItemRow({ item, onEdit, onDelete }: Props) {
   return (
     <tr>
       <th>{item.description}</th>
+      <th>{item.type}</th>
       <th>{item.cost.toString()}</th>
       <th>{item.amount}</th>
       <th>{item.totalToString()}</th>

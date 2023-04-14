@@ -26,9 +26,7 @@ export function ReceiptsTable({receipts} : Props) {
               <th>{receipt.date.toDateString()}</th>
               <th>
                 {
-                receipt.total()
-                  .map(perCurrency => perCurrency.toString())
-                  .reduce((p, c) => `${p} + ${c}`)
+                receipt.totalToString()
                 }
               </th>
               <th><Link to={`./${i}`}>View</Link></th>

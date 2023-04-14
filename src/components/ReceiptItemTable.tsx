@@ -25,6 +25,7 @@ export default function ReceiptItemTable({receipt, onChange}:Props) {
       <thead>
         <tr>
           <th>Description</th>
+          <th>Type</th>
           <th>Cost</th>
           <th>Amount</th>
           <th>Total</th>
@@ -46,6 +47,7 @@ export default function ReceiptItemTable({receipt, onChange}:Props) {
       </tbody>
       <tfoot>
         <tr>
+          <th/>
           <th/>
           <th/>
           <th>Total:</th>
