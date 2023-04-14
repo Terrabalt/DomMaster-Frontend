@@ -9,7 +9,7 @@ interface Props {
 
 export default function NewReceiptItemRow({onAdd}: Props) {
   const [description, setDescription] = useState("")
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState(1)
   const [money, setMoney] = useState(new Money())
 
   return (

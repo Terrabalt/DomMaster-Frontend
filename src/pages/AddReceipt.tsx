@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Receipt } from '../dataclass';
-import EditableReceiptTable from '../components/EditableReceiptTable';
+import ReceiptTable from '../components/ReceiptTable';
 
 import { addReceipt } from '../data/database';
 
@@ -12,7 +12,7 @@ function AddReceipt() {
   return (
     <div>
       <Link to="..">return</Link>
-      <EditableReceiptTable receipt={receipt} onChange={v => {setReceipt(v)}}/>
+      <ReceiptTable receipt={receipt} onChange={v => {setReceipt(v)}}/>
       <button
         id='finish-add'
         onClick={() => {

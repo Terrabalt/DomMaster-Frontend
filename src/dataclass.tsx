@@ -34,6 +34,13 @@ export class Receipt {
         }) 
         return [...temp.keys()].map<Money>(currency => new Money(temp.get(currency) ?? BigInt(0), currency))
     }
+    public totalToString = () => {
+        return this.items.length > 0 ?
+        this.total()
+          .map(v => v.toString())
+          .reduce((p, c) => `${p} + ${c}`)
+        : '-'
+    }
 }
 
 export class ReceiptItem {
@@ -49,7 +56,8 @@ export class ReceiptItem {
     }
     public total = () => { return this.cost.multiply(this.amount) }
     public totalToString = () => {
-        return this.total().toString() }
+        return this.total().toString()
+    }
 }
 
 export class Money {

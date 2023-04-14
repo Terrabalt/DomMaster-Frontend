@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Receipt } from '../dataclass';
-import EditableReceiptTable from '../components/EditableReceiptTable';
 
 import { getReceipt, updateReceipt } from '../data/database';
+import ReceiptTable from '../components/ReceiptTable';
 
 export default function EditReceipt() {
   const navigate = useNavigate()
@@ -22,7 +22,7 @@ export default function EditReceipt() {
   return (
     <div>
       <Link to="..">return</Link>
-      <EditableReceiptTable receipt={receipt} onChange={v => {setReceipt(v)}}/>
+      <ReceiptTable receipt={receipt} onChange={v => {setReceipt(v)}}/>
       <button
         id='finish-edit'
         onClick={() => {
