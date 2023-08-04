@@ -5,7 +5,6 @@ import { IntlProvider } from 'react-intl';
 import { getLocale } from '../data/locale';
 
 export default function Layout() {
-
     return (
       <IntlProvider locale={getLocale()}>
         <div id={"header"}>
@@ -14,7 +13,7 @@ export default function Layout() {
             <div>
               <Link to="/"> Home </Link>
               <Link to="/receipts"> Receipts </Link>
-              <Link to="/config"> config </Link>
+              <Link to="/config"> Config </Link>
             </div>
           </center>
         </div>

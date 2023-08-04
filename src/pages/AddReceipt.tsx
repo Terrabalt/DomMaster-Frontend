@@ -3,9 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Receipt } from '../dataclass';
 import ReceiptTable from '../components/ReceiptTable';
 
-import { addReceipt } from '../data/database';
+import { ReceiptDatabase } from '../data/database';
 
-function AddReceipt() {
+interface Props {
+  database: ReceiptDatabase;
+}
+
+function AddReceipt({database} : Props) {
   const navigate = useNavigate()
   const [receipt, setReceipt] = useState<Receipt>(new Receipt());
   
@@ -17,7 +21,7 @@ function AddReceipt() {
         id='finish-add'
         onClick={() => {
           if (receipt.title.trim() == "" || receipt.items.length == 0) return;
-          addReceipt(receipt).then(()=>{
+          database.AddReceipt(receipt).then(()=>{
             navigate(-1);
           })
         }}

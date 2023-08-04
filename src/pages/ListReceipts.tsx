@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Receipt } from '../dataclass';
-import { getReceipts } from '../data/database';
+import { ReceiptDatabase } from '../data/database';
 
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import { ReceiptsTable } from '../components/ReceiptsTable';
 
-function ListReceipts() {
+interface Props {
+  database: ReceiptDatabase;
+}
+
+function ListReceipts({database} : Props) {
   const [receipts, setReceipts] = useState<Receipt[]>([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    getReceipts().then(v => {
+    database.GetReceipts().then(v => {
       setReceipts(v);
       setLoading(false)
     })

@@ -2,17 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Receipt } from '../dataclass';
 
-import { getReceipt, updateReceipt } from '../data/database';
+import { ReceiptDatabase } from '../data/database';
 import ReceiptTable from '../components/ReceiptTable';
 
-export default function EditReceipt() {
+interface Props {
+  database: ReceiptDatabase;
+}
+
+export default function EditReceipt({database} : Props) {
   const navigate = useNavigate()
   const { id } = useParams()
   const [receipt, setReceipt] = useState<Receipt>(new Receipt());
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    getReceipt(Number(id)).then(v => {
+    database.GetReceipt(Number(id)).then(v => {
       setReceipt(v);
       setLoading(false)
     })
@@ -27,7 +31,7 @@ export default function EditReceipt() {
         id='finish-edit'
         onClick={() => {
           if (receipt.title.trim() == "" || receipt.items.length == 0) return;
-          updateReceipt(Number(id), receipt).then(()=>{
+          database.UpdateReceipt(Number(id), receipt).then(()=>{
             navigate(-1);
           })
         }}

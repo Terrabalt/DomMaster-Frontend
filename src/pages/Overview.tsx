@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { getReceipts } from '../data/database';
+import { ReceiptDatabase } from '../data/database';
 import { Receipt } from '../dataclass';
 
-function Overview() {
+interface Props {
+  database: ReceiptDatabase;
+}
+
+function Overview({database} : Props) {
   const [receipts, setReceipts] = useState<Receipt[]>([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    getReceipts().then(v => {
+    database.GetReceipts().then(v => {
       if (v.length > 0) {
         const currDate = new Date()
         const thisMonthReceipts = v.filter(val => 

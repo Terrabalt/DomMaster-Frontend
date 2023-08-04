@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Receipt } from '../dataclass';
-import { getReceipt } from '../data/database';
+import { ReceiptDatabase } from '../data/database';
 
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import ReceiptTable from '../components/ReceiptTable';
 
-function ViewReceipt() {
+interface Props {
+  database: ReceiptDatabase;
+}
+
+function ViewReceipt({database} : Props) {
   const navigate = useNavigate()
   const { id } = useParams()
   const [receipt, setReceipt] = useState<Receipt | undefined>(undefined);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    getReceipt(Number(id)).then(v => {
+    database.GetReceipt(Number(id)).then(v => {
       setReceipt(v);
       return undefined
     }, e => {
