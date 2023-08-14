@@ -20,7 +20,7 @@ export function ReceiptsTable({receipts} : Props) {
       </thead>
       <tbody>
         {
-          receipts.map((receipt, i) => (
+          receipts.map((receipt) => (
             <tr key={receipt.id}>
               <th>{receipt.title}</th>
               <th>{receipt.date.toDateString()}</th>
@@ -29,8 +29,8 @@ export function ReceiptsTable({receipts} : Props) {
                 receipt.totalToString()
                 }
               </th>
-              <th><Link to={`./${i}`}>View</Link></th>
-              <th><Link to={`./${i}/edit`}>Edit</Link></th>
+              <th><Link to={`./${receipt.id}`}>View</Link></th>
+              <th><Link to={`./${receipt.id}/edit`}>Edit</Link></th>
             </tr>
           ))
         }

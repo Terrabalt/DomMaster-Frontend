@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Database } from '../data/database';
-import { LocalDatabase } from '../data/localDatabase';
+import { IsLocalDatabaseExist, LocalDatabase, NewLocalDatabase } from '../data/localDatabase';
 import '../css/index.css';
 import { IntlProvider } from 'react-intl';
 import { getLocale } from '../data/locale';
@@ -11,6 +11,11 @@ interface Props {
 }
   
 export default function Landing({onNewDatabase} : Props) {
+  const [isLocalDatabaseExist, setLocalDatabaseExist] = useState(false);
+  useEffect(() => {
+    IsLocalDatabaseExist()
+      .then((v) => setLocalDatabaseExist(v))
+  })
 
   return (
     <IntlProvider locale={getLocale()}>
@@ -21,9 +26,26 @@ export default function Landing({onNewDatabase} : Props) {
             <button
               id='new-local-account'
               onClick={() => {
-                onNewDatabase(new LocalDatabase())
+                NewLocalDatabase()
+                  .then(
+                    (database) => onNewDatabase(database),
+                    (e) => console.error(e)
+                  )
               }}
             >New Local Account</button>
+            { isLocalDatabaseExist? 
+              <button
+                id='existing-local-account'
+                onClick={() => {
+                  const database = new LocalDatabase()
+                  database.init()
+                    .then(
+                      () => onNewDatabase(database),
+                      (e) => console.error(e)
+                    )
+                }}
+              >Use Existing Local Account</button>
+            :<></>}
           </div>
         </center>
       </div>

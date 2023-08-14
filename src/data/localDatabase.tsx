@@ -1,49 +1,175 @@
 import { Database } from "./database"
-import { Receipt } from "../dataclass"
+import { Receipt, ReceiptAssign } from "../dataclass"
 
+const dbname = "dommaster_local";
 
+export function IsLocalDatabaseExist() : Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    const req = window.indexedDB.open(dbname)
+    req.onerror = () => {
+      reject(req.error)
+    }
+    req.onupgradeneeded = () => {
+      req.transaction?.abort();
+      resolve(false)
+    }
+    req.onsuccess = () => {
+      resolve(true)
+    }
+  })
+}
+export function NewLocalDatabase():Promise<LocalDatabase> {
+  return new Promise((resolve, reject) => {
+    const lb = new LocalDatabase();
+    const resetreq = lb.IndxDb.deleteDatabase(dbname)
+    resetreq.onerror = () => {
+      reject(resetreq.error);
+    }
+    resetreq.onsuccess = () => {
+      const newreq = lb.IndxDb.open(dbname, 1);
+      newreq.onsuccess = () => {
+        lb.db = newreq.result;
+        resolve(lb);
+      }
+      newreq.onerror = () => {
+        reject(newreq.error);
+      }
+      newreq.onupgradeneeded = () => {
+        lb.db = newreq.result;
+        const receipt = lb.db.createObjectStore("receipt", { keyPath: "id", autoIncrement: true });
+        receipt?.createIndex("date", "date", {unique:false});
+        resolve(lb);
+      };
+    }
+  })
+}
 export class LocalDatabase implements Database {
   Receipts : Receipt[] = []
-  
-  GetReceipt(id: number): Promise<Receipt> {
+
+  IndxDb: IDBFactory = window.indexedDB;
+  db: IDBDatabase | undefined;
+  error: DOMException | undefined;
+   
+  init() :Promise<void>{
     return new Promise((resolve, reject) => {
-      if (id in this.Receipts)
-        resolve(this.Receipts[id])
-      else
-        reject(Error("404 not found"))
+      const req = this.IndxDb.open(dbname, 1);
+
+      req.onsuccess = () => {
+        this.db = req.result;
+        resolve();
+      }
+      req.onerror = () => {
+        reject(this.error);
+      }
+      req.onupgradeneeded = () => {
+        this.db = req.result;
+        const receipt = this.db.createObjectStore("receipt", { keyPath: "id", autoIncrement: true });
+        receipt?.createIndex("date", "date", {unique:false});
+        resolve();
+      };
+    })
+  }
+  GetReceipt(id: string): Promise<Receipt> {
+    return new Promise((resolve, reject) => {
+      if (this.db) {
+        const request = this.db.transaction(["receipt"], "readonly")
+          .objectStore("receipt")
+          .get(Number(id));
+
+        request.onsuccess = () => {
+          console.log(request.result)
+          resolve(ReceiptAssign(request.result))
+        }
+        request.onerror = () => {
+          reject(request.error)
+        }
+      } else {
+        reject("local storage has not been initialized")
+      }
     })
   }
   GetReceipts(): Promise<Receipt[]> {
-    return new Promise((resolve) => {
-        resolve(this.Receipts)
+    return new Promise((resolve, reject) => {
+      if (this.db) {  
+        const result : Receipt[] = [];
+        const request = this.db.transaction(["receipt"], "readonly")
+          .objectStore("receipt")
+          .openCursor();
+
+        request.onsuccess = () => {
+          const cursor = request.result;
+          if (cursor) {
+            result.push(ReceiptAssign(cursor.value));
+            cursor.continue();
+          } else {
+            console.log(result)
+            resolve(result)
+          }
+        }
+        request.onerror = () => {
+          reject(request.error)
+        }
+      } else {
+        reject("local storage has not been initialized")
+      }
     })
   }
   
-  UpdateReceipt(id: number, receipt:Receipt): Promise<Receipt> {
+  UpdateReceipt(id: string, receipt:Receipt): Promise<Receipt> {
     return new Promise((resolve, reject) => {
-      if (id <= this.Receipts.length) {
-        this.Receipts[id] = receipt
-        resolve(this.Receipts[id])
+      if (this.db) {
+        const request = this.db.transaction(["receipt"], "readwrite")
+          .objectStore("receipt")
+          .put({...receipt, id:Number(id)});
+
+        request.onsuccess = () => {
+          resolve(receipt)
+        }
+        request.onerror = () => {
+          reject(request.error)
+        }
+      } else {
+        reject("local storage has not been initialized")
       }
-      else
-        reject(Error("404 not found"))
     })
   }
   AddReceipt(receipt:Receipt): Promise<Receipt> {
-    return new Promise((resolve) => {
-      const inserted = new Receipt(this.Receipts.length.toString(), receipt.title, receipt.items, receipt.date)
-      this.Receipts.push(inserted)
-      resolve(inserted)
+    return new Promise((resolve, reject) => {
+      if (this.db) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const {id:_, ...newReceipt} = receipt
+        const request = this.db.transaction(["receipt"], "readwrite")
+          .objectStore("receipt")
+          .add(newReceipt);
+
+        request.onsuccess = () => {
+          receipt.id = request.result.toString()
+          resolve(receipt)
+        }
+        request.onerror = () => {
+          reject(request.error)
+        }
+      } else {
+        reject("local storage has not been initialized")
+      }
     })
   }
-  DeleteReceipt(id: number): Promise<Receipt> {
+  DeleteReceipt(id: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      if (id <= this.Receipts.length) {
-        const deleted = this.Receipts.splice(id, 1)
-        resolve(deleted[0])
+      if (this.db) {
+        const request = this.db.transaction(["receipt"], "readwrite")
+          .objectStore("receipt")
+          .delete(Number(id));
+
+        request.onsuccess = () => {
+          resolve(id)
+        }
+        request.onerror = () => {
+          reject(request.error)
+        }
+      } else {
+        reject("local storage has not been initialized")
       }
-      else
-        reject(Error("404 not found"))
     })
   }
 }

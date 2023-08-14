@@ -32,7 +32,7 @@ function Overview({database} : Props) {
           )
         )
         return concat
-      }, new Receipt(undefined, undefined, []))
+      }, new Receipt())
       .totalToString()
       : "none!";
   }
@@ -45,8 +45,8 @@ function Overview({database} : Props) {
           )
         )
         return concat
-      }, new Receipt(undefined, undefined, []))
-        .totalToString()
+      }, new Receipt()
+      ).totalToString()
       : "none!";
   }
   if (isLoading) return <>Loading...</>

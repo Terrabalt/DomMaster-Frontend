@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, redirect, useNavigate, useParams } from 'react-router-dom';
 import { Receipt } from '../dataclass';
 
 import { ReceiptDatabase } from '../data/database';
@@ -16,10 +16,13 @@ export default function EditReceipt({database} : Props) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    database.GetReceipt(Number(id)).then(v => {
-      setReceipt(v);
-      setLoading(false)
-    })
+    if (id)
+      database.GetReceipt(id).then(v => {
+        setReceipt(v);
+        setLoading(false)
+      })
+    else 
+      redirect("/error")
   }, [])
 
   if (isLoading) return <>Loading...</>
@@ -31,7 +34,7 @@ export default function EditReceipt({database} : Props) {
         id='finish-edit'
         onClick={() => {
           if (receipt.title.trim() == "" || receipt.items.length == 0) return;
-          database.UpdateReceipt(Number(id), receipt).then(()=>{
+          database.UpdateReceipt(id||"", receipt).then(()=>{
             navigate(-1);
           })
         }}

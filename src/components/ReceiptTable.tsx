@@ -11,15 +11,21 @@ interface Props {
 export default function ReceiptTable({receipt, onChange}:Props) {  
   function changeItem(items: ReceiptItem[]) {
     if (onChange == undefined) return
-    onChange(new Receipt(receipt.id, receipt.title, items, receipt.date))
+    const nReceipt = new Receipt()
+    Object.assign(nReceipt, receipt, {items: items})
+    onChange(nReceipt)
   }
   function changeDate(date: Date) {
     if (onChange == undefined) return
-    onChange(new Receipt(receipt.id, receipt.title, receipt.items, date));
+    const nReceipt = new Receipt()
+    Object.assign(nReceipt, receipt, {date: date})
+    onChange(nReceipt)
   }
   function changeTitle(title: string) {
     if (onChange == undefined) return
-    onChange(new Receipt(receipt.id, title, receipt.items, receipt.date));
+    const nReceipt = new Receipt()
+    Object.assign(nReceipt, receipt, {title: title})
+    onChange(nReceipt)
   }
   return (
     <div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate, redirect, useNavigate, useParams } from 'react-router-dom';
 import { Receipt } from '../dataclass';
 import { ReceiptDatabase } from '../data/database';
 
@@ -18,14 +18,18 @@ function ViewReceipt({database} : Props) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    database.GetReceipt(Number(id)).then(v => {
-      setReceipt(v);
-      return undefined
-    }, e => {
-      return e
-    }).then(() => {
-      setLoading(false)
-    })
+    if (id)
+      database.GetReceipt(id).then(v => {
+        console.log(v)
+        setReceipt(v);
+        return undefined
+      }, e => {
+        return e
+      }).then(() => {
+        setLoading(false)
+      })
+    else 
+      redirect("/error")
   }, [])
 
   if (isLoading) return <>Loading...</>

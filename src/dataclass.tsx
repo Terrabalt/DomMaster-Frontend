@@ -12,22 +12,11 @@ export class Wallet {
 }
 
 export class Receipt {
-  id: string;
-  title: string;
-  items: ReceiptItem[];
-  date: Date;
-  constructor(
-    id = "",
-    title = "",
-    items: ReceiptItem[] = [],
-    date = new Date()
-  ) {
-    this.id = id;
-    this.title = title;
-    this.items = items;
-    this.date = date;
-  }
-  public total = () => {
+  id = "";
+  title = "";
+  items: ReceiptItem[] = [];
+  date: Date = new Date();
+  public total () {
     const temp = new Map<CurrencyCode, bigint>()
     this.items.forEach((item) => {
       switch (item.type) {
@@ -49,7 +38,7 @@ export class Receipt {
       .map<Money>(currency => new Money(temp.get(currency) ?? BigInt(0), currency))
       .filter(v => v.amount != BigInt(0))
   }
-  public totalToString = () => {
+  public totalToString() {
     const total = this.total()
     return total.length > 0 ?
       total
@@ -60,6 +49,12 @@ export class Receipt {
 }
 export type ReceiptItemType = "credit" | "debit";
 export const ReceiptItemTypes:ReceiptItemType[] = ["credit", "debit"]
+export function ReceiptAssign(...o: unknown[]) : Receipt {
+  const receipt = new Receipt();
+  Object.assign(receipt, ...o)
+  receipt.items = receipt.items.map((v) => ReceiptItemAssign(v))
+  return receipt
+}
 
 export class ReceiptItem {
   id: string;
@@ -74,11 +69,18 @@ export class ReceiptItem {
     this.cost = cost;
     this.amount = amount;
   }
-  public total = () => { return this.cost.multiply(this.amount) }
-  public totalToString = () => {
+  public total() { return this.cost.multiply(this.amount) }
+  public totalToString () {
     return this.total().toString()
   }
 }
+export function ReceiptItemAssign(...o: unknown[]) : ReceiptItem {
+  const receiptItem = new ReceiptItem();
+  Object.assign(receiptItem, ...o)
+  receiptItem.cost = MoneyAssign(receiptItem.cost)
+  return receiptItem
+}
+
 
 export class Money {
   amount: bigint;
@@ -87,12 +89,17 @@ export class Money {
     this.amount = amount;
     this.currency = currency;
   }
-  public toString = () : string => {
+  public toString() : string {
     const full = this.amount / BigInt(100);
     const fraction = Math.abs(Number(this.amount - (full * BigInt(100))));
     return `${CurrencySymbol(this.currency)}${full},${fraction}`
   }
-  public multiply = (times: number) : Money => {
+  public multiply(times: number) : Money {
     return new Money(this.amount * BigInt(times), this.currency)
   }
+}
+export function MoneyAssign(...o: unknown[]) : Money {
+  const money = new Money();
+  Object.assign(money, ...o)
+  return money
 }
