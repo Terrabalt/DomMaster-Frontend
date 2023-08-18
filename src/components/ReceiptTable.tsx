@@ -1,8 +1,8 @@
 import React from 'react';
 import { Receipt, ReceiptItem } from '../dataclass';
 import {FormattedDate} from 'react-intl';
-import DatePicker from 'react-date-picker';
 import ReceiptItemTable from './ReceiptItemTable';
+import Calendar from 'react-calendar';
 
 interface Props {
     receipt: Receipt;
@@ -39,17 +39,12 @@ export default function ReceiptTable({receipt, onChange}:Props) {
     }
     { onChange? (
       <label>Date:
-        <DatePicker
-          calendarAriaLabel="Toggle calendar"
-          dayAriaLabel="Day"
-          monthAriaLabel="Month"
-          nativeInputAriaLabel="Date"
+        <Calendar
           value={receipt.date}
-          onChange={date => { 
-            if (date) 
-              changeDate(date as Date)
+          onChange={v => { 
+            if (v instanceof Date) 
+              changeDate(v as Date)
           }}
-          yearAriaLabel="Year"
         />
       </label>
     ) : (
