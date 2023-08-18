@@ -88,13 +88,19 @@ export class LocalDatabase implements Database {
       }
     })
   }
-  GetReceipts(): Promise<Receipt[]> {
+  GetReceipts(range:[Date, Date]|undefined): Promise<Receipt[]> {
     return new Promise((resolve, reject) => {
+      console.log(range)
       if (this.db) {  
         const result : Receipt[] = [];
         const request = this.db.transaction(["receipt"], "readonly")
           .objectStore("receipt")
-          .openCursor();
+          .index("date")
+          .openCursor(
+            range ? 
+              IDBKeyRange.bound(range[0], range[1], false, false)
+              : undefined
+          );
 
         request.onsuccess = () => {
           const cursor = request.result;

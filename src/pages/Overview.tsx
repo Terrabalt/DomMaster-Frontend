@@ -12,7 +12,7 @@ function Overview({database} : Props) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    database.GetReceipts().then(v => {
+    database.GetReceipts(undefined).then(v => {
       const currDate = new Date()
       const thisMonthReceipts = v.filter(val => 
         val.date.getMonth() == currDate.getMonth() 
