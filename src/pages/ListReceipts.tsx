@@ -58,7 +58,6 @@ function ListReceipts({database} : Props) {
       setSelectedReceipts(receipts.filter((v) => {
         return isDateOnDay(v.date, newDate)
       }));
-      console.log(selectedReceipts)
     }
   }
 
@@ -71,7 +70,7 @@ function ListReceipts({database} : Props) {
         }}
         onActiveStartDateChange={({activeStartDate}) => {
           if (activeStartDate)
-          onActiveStartDateChanged(activeStartDate)
+            onActiveStartDateChanged(activeStartDate)
         }}
         value={date}
       />

@@ -77,7 +77,6 @@ export class LocalDatabase implements Database {
           .get(Number(id));
 
         request.onsuccess = () => {
-          console.log(request.result)
           resolve(ReceiptAssign(request.result))
         }
         request.onerror = () => {
@@ -90,7 +89,6 @@ export class LocalDatabase implements Database {
   }
   GetReceipts(range:[Date, Date]|undefined): Promise<Receipt[]> {
     return new Promise((resolve, reject) => {
-      console.log(range)
       if (this.db) {  
         const result : Receipt[] = [];
         const request = this.db.transaction(["receipt"], "readonly")
@@ -108,7 +106,6 @@ export class LocalDatabase implements Database {
             result.push(ReceiptAssign(cursor.value));
             cursor.continue();
           } else {
-            console.log(result)
             resolve(result)
           }
         }

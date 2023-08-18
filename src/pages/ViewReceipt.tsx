@@ -20,7 +20,6 @@ function ViewReceipt({database} : Props) {
   useEffect(() => {
     if (id)
       database.GetReceipt(id).then(v => {
-        console.log(v)
         setReceipt(v);
         return undefined
       }, e => {
