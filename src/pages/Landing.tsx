@@ -4,7 +4,7 @@ import { Database } from '../data/database';
 import { IsLocalDatabaseExist, LocalDatabase, NewLocalDatabase } from '../data/localDatabase';
 import '../css/index.css';
 import { IntlProvider } from 'react-intl';
-import { getLocale } from '../data/locale';
+import { getLocale } from '../data/settings';
 
 interface Props {
   onNewDatabase: (newDatabase: Database) => void;

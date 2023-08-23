@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, Outlet} from 'react-router-dom';
 import '../css/index.css';
 import { IntlProvider } from 'react-intl';
-import { getLocale } from '../data/locale';
+import { getLocale } from '../data/settings';
 
 export default function Layout() {
     return (

@@ -1,4 +1,5 @@
 import { CurrencyCode, CurrencySymbol } from "./currencyCode";
+import { getCurrencyPreference } from "./data/settings";
 
 export class Wallet {
   id: string;
@@ -44,6 +45,7 @@ export class Receipt {
       total
       .map(v => v.toString())
       .reduce((p, c) => `${p} + ${c}`)
+      
     : '-'
   }
 }
@@ -85,11 +87,11 @@ export function ReceiptItemAssign(...o: unknown[]) : ReceiptItem {
 export class Money {
   amount: bigint;
   currency: CurrencyCode;
-  constructor(amount = BigInt(0), currency: CurrencyCode = "IDR") {
+  constructor(amount = BigInt(0), currency: CurrencyCode = getCurrencyPreference()) {
     this.amount = amount;
     this.currency = currency;
   }
-  public toString() : string {
+  public toString() : string { //TODO: Proper formatting with locale
     const full = this.amount / BigInt(100);
     const fraction = Math.abs(Number(this.amount - (full * BigInt(100))));
     return `${CurrencySymbol(this.currency)}${full},${fraction}`
