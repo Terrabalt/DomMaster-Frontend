@@ -14,6 +14,7 @@ export default function Layout() {
               <Link to="/"> Home </Link>
               <Link to="/receipts"> Receipts </Link>
               <Link to="/config"> Config </Link>
+              <Link to="/export"> Export </Link>
             </div>
           </center>
         </div>

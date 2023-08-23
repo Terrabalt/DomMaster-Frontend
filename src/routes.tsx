@@ -11,6 +11,7 @@ import ErrorPage from './pages/ErrorPage';
 import Config from './pages/Config';
 import { Database } from './data/database';
 import Landing from './pages/Landing';
+import ExportPage from './pages/Export';
 
 export default function AppRoutes() {
   const [database, setdatabase] = useState<Database|undefined>();
@@ -31,6 +32,7 @@ export default function AppRoutes() {
               <Route path="/" element={<Layout />} >
                 <Route index element={<Overview database={database} />} />
                 <Route path="/error" element={<ErrorPage />} />
+                <Route path="/export" element={<ExportPage database={database}/>} />
                 <Route path="/config" element={<Config onLogout={onLogout}/>} />
                 <Route path="/receipts"> 
                   <Route index element={<ListReceipts database={database} />}/>
