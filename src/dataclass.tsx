@@ -54,6 +54,7 @@ export const ReceiptItemTypes:ReceiptItemType[] = ["credit", "debit"]
 export function ReceiptAssign(...o: unknown[]) : Receipt {
   const receipt = new Receipt();
   Object.assign(receipt, ...o)
+  receipt.date = new Date(receipt.date)
   receipt.items = receipt.items.map((v) => ReceiptItemAssign(v))
   return receipt
 }

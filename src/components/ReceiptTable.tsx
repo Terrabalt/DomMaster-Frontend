@@ -2,7 +2,11 @@ import React from 'react';
 import { Receipt, ReceiptItem } from '../dataclass';
 import {FormattedDate} from 'react-intl';
 import ReceiptItemTable from './ReceiptItemTable';
-import Calendar from 'react-calendar';
+import DateTimePicker from 'react-datetime-picker';
+
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
 
 interface Props {
     receipt: Receipt;
@@ -34,21 +38,24 @@ export default function ReceiptTable({receipt, onChange}:Props) {
         <input value={receipt.title} onChange={(e) => changeTitle(e.target.value)}/>
       </label>
     ) : (
-      <caption>{receipt.title || "#00"}<br/></caption>
-    )
-    }
+      <p>{receipt.title || "#00"}</p>
+    )}
     { onChange? (
       <label>Date:
-        <Calendar
+        <DateTimePicker 
+          dayAriaLabel="Day"
+          monthAriaLabel="Month"
+          yearAriaLabel="Year"
           value={receipt.date}
           onChange={v => { 
+            
             if (v instanceof Date) 
               changeDate(v as Date)
           }}
         />
       </label>
     ) : (
-      <FormattedDate value={receipt.date} day='2-digit' month='long' year='numeric'/>
+      <FormattedDate value={receipt.date} hour='2-digit' minute='2-digit'/>
     )
     }
       <ReceiptItemTable receipt={receipt} onChange={onChange ? changeItem : undefined}/>

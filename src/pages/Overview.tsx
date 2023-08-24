@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ReceiptDatabase } from '../data/database';
 import { Receipt } from '../dataclass';
+import { getMonthRange } from '../helper/DateHelper';
 
 interface Props {
   database: ReceiptDatabase;
@@ -12,13 +13,8 @@ function Overview({database} : Props) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    database.GetReceipts(undefined).then(v => {
-      const currDate = new Date()
-      const thisMonthReceipts = v.filter(val => 
-        val.date.getMonth() == currDate.getMonth() 
-        && val.date.getFullYear() == currDate.getFullYear()
-        )
-      setReceipts(thisMonthReceipts);
+    database.GetReceipts(getMonthRange(new Date)).then(v => {
+      setReceipts(v);
       setLoading(false)
     })
   }, [])

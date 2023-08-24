@@ -12,7 +12,7 @@ export function ReceiptsTable({receipts} : Props) {
       <thead>
         <tr>
           <th>Title</th>
-          <th>Date</th>
+          <th>Time</th>
           <th>Total</th>
           <th>Actions</th>
           <th/>
@@ -23,7 +23,7 @@ export function ReceiptsTable({receipts} : Props) {
           receipts.map((receipt) => (
             <tr key={receipt.id}>
               <th>{receipt.title}</th>
-              <th>{receipt.date.toDateString()}</th>
+              <th>{receipt.date.toLocaleTimeString()}</th>
               <th>
                 {
                 receipt.totalToString()

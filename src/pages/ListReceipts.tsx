@@ -7,26 +7,10 @@ import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import { ReceiptsTable } from '../components/ReceiptsTable';
 import Calendar from 'react-calendar';
+import { getMonthRange, isDateOnDay } from '../helper/DateHelper';
 
 interface Props {
   database: ReceiptDatabase;
-}
-
-function getMonthRange(date: Date) : [Date, Date] {  
-  const startDate = new Date(date)
-  startDate.setDate(1)
-  const endDate = new Date(date)
-  endDate.setMonth(endDate.getMonth() + 1)
-  endDate.setDate(0)
-  return [startDate, endDate]
-}
-
-function isDateOnDay(date:Date, day:Date) : boolean {
-  const startDay = new Date(day)
-  startDay.setHours(0,0,0,0)
-  const endDay = new Date(day)
-  endDay.setHours(23,59,59,999)
-  return date >= startDay && date <= endDay
 }
 
 function ListReceipts({database} : Props) {
@@ -42,16 +26,15 @@ function ListReceipts({database} : Props) {
       setLoading(false);
     })
   }
-
   useEffect(() => {
     const cleanDate = new Date()
     cleanDate.setHours(0, 0, 0, 0)
     getMonthReceipts(cleanDate)
   }, [])
-
   function onActiveStartDateChanged(newDate: Date) {
     getMonthReceipts(newDate)
   }
+
   function onDateChange(newDate: Date) {
     if (newDate != date) {
       setDate(newDate);
@@ -72,6 +55,17 @@ function ListReceipts({database} : Props) {
           if (activeStartDate)
             onActiveStartDateChanged(activeStartDate)
         }}
+        tileContent={(v) => {
+          if (v.view != 'month') return null;
+          const d = receipts.findIndex((value) => isDateOnDay(value.date, v.date))
+
+          if (d > -1) {
+          return <div style={{height:'react-calendar__tile'}}>+</div>
+          }
+          else 
+            return <div style={{height:'react-calendar__tile'}}>{"　"}</div>
+        }}
+        showNeighboringMonth={false}
         value={date}
       />
       { isLoading ?
@@ -82,8 +76,7 @@ function ListReceipts({database} : Props) {
             <Link to={`./add`}>Add new</Link>
           </div> 
         :
-          <p>No receipts. <Link to={`./add`}>Add new.</Link></p> 
-        
+          <p>No receipts. <Link to={`./add`}>Add new.</Link></p>
       }
     </div>
   )
