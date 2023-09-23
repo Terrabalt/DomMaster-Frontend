@@ -23,28 +23,32 @@ export default function Landing({onNewDatabase} : Props) {
         <center>
           <h1>appname</h1>
           <div>
-            <button
-              id='new-local-account'
-              onClick={() => {
-                NewLocalDatabase()
-                  .then(
-                    (database) => onNewDatabase(database),
-                    (e) => console.error(e)
-                  )
-              }}
-            >New Local Account</button>
-            { isLocalDatabaseExist? 
+            <p>
               <button
-                id='existing-local-account'
+                id='new-local-account'
                 onClick={() => {
-                  const database = new LocalDatabase()
-                  database.init()
+                  NewLocalDatabase()
                     .then(
-                      () => onNewDatabase(database),
+                      (database) => onNewDatabase(database),
                       (e) => console.error(e)
                     )
                 }}
-              >Use Existing Local Account</button>
+              >New Local Account</button>
+            </p>
+            { isLocalDatabaseExist? 
+              <p>
+                <button
+                  id='existing-local-account'
+                  onClick={() => {
+                    const database = new LocalDatabase()
+                    database.Init()
+                      .then(
+                        () => onNewDatabase(database),
+                        (e) => console.error(e)
+                      )
+                  }}
+                >Use Existing Local Account</button>
+              </p>
             :<></>}
           </div>
         </center>

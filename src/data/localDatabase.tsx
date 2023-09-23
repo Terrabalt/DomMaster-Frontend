@@ -18,45 +18,46 @@ export function IsLocalDatabaseExist() : Promise<boolean> {
     }
   })
 }
-export function NewLocalDatabase():Promise<LocalDatabase> {
+function deleteLocalDatabase():Promise<boolean> {
   return new Promise((resolve, reject) => {
-    const lb = new LocalDatabase();
-    const resetreq = lb.IndxDb.deleteDatabase(dbname)
+    const resetreq = IndxDb.deleteDatabase(dbname)
     resetreq.onerror = () => {
       reject(resetreq.error);
     }
     resetreq.onsuccess = () => {
-      const newreq = lb.IndxDb.open(dbname, 1);
-      newreq.onsuccess = () => {
-        lb.db = newreq.result;
-        resolve(lb);
-      }
-      newreq.onerror = () => {
-        reject(newreq.error);
-      }
-      newreq.onupgradeneeded = () => {
-        lb.db = newreq.result;
-        const receipt = lb.db.createObjectStore("receipt", { keyPath: "id", autoIncrement: true });
-        receipt?.createIndex("date", "date", {unique:false});
-        resolve(lb);
-      };
+      resolve(true)
     }
   })
 }
+export function NewLocalDatabase():Promise<LocalDatabase> {
+  let ldb : LocalDatabase
+  return deleteLocalDatabase()
+    .then((v)=> {
+    if (!v) 
+      return Promise.reject("Deleting current IndexedDB failed")
+    ldb = new LocalDatabase();
+    return ldb.Init()
+  }).then(() => {
+    return Promise.resolve(ldb)
+  }, (e) => {
+    return Promise.reject(e)
+  })
+}
+const IndxDb: IDBFactory = window.indexedDB;
 export class LocalDatabase implements Database {
-  Receipts : Receipt[] = []
-
-  IndxDb: IDBFactory = window.indexedDB;
   db: IDBDatabase | undefined;
   error: DOMException | undefined;
    
-  init() :Promise<void>{
+  _isInit = false
+  isInit() : boolean { return this._isInit }
+  Init() :Promise<boolean>{
     return new Promise((resolve, reject) => {
-      const req = this.IndxDb.open(dbname, 1);
+      const req = IndxDb.open(dbname, 3);
 
       req.onsuccess = () => {
         this.db = req.result;
-        resolve();
+        this._isInit=true
+        resolve(true);
       }
       req.onerror = () => {
         reject(this.error);
@@ -65,10 +66,11 @@ export class LocalDatabase implements Database {
         this.db = req.result;
         const receipt = this.db.createObjectStore("receipt", { keyPath: "id", autoIncrement: true });
         receipt?.createIndex("date", "date", {unique:false});
-        resolve();
+        receipt?.createIndex("category", "category", {unique:false});
       };
     })
   }
+
   GetReceipt(id: string): Promise<Receipt> {
     return new Promise((resolve, reject) => {
       if (this.db) {
@@ -87,7 +89,7 @@ export class LocalDatabase implements Database {
       }
     })
   }
-  GetReceipts(range:[Date, Date]|undefined): Promise<Receipt[]> {
+  GetReceipts(range?:[Date, Date]): Promise<Receipt[]> {
     return new Promise((resolve, reject) => {
       if (this.db) {  
         const result : Receipt[] = [];
@@ -96,7 +98,7 @@ export class LocalDatabase implements Database {
           .index("date")
           .openCursor(
             range ? 
-              IDBKeyRange.bound(range[0], range[1], false, false)
+              IDBKeyRange.bound(range[0], range[1], false, true)
               : undefined
           );
 
@@ -170,6 +172,19 @@ export class LocalDatabase implements Database {
         request.onerror = () => {
           reject(request.error)
         }
+      } else {
+        reject("local storage has not been initialized")
+      }
+    })
+  }
+  Cookie(): string {
+    return "local"
+  }
+  Close(): Promise<boolean>{
+    return new Promise((resolve, reject) => {
+      if (this.db) {
+        this.db.close()
+        resolve(true)
       } else {
         reject("local storage has not been initialized")
       }

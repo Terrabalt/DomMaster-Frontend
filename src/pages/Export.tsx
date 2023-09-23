@@ -12,7 +12,7 @@ export default function ExportPage({database}:Props) {
   const [objectUrl, setObjectUrl] = useState("")
   
   useEffect(() => {
-    database.GetReceipts(undefined).then(
+    database.GetReceipts().then(
       (receipts) => {
         const blob = new Blob([JSON.stringify(receipts, BigIntReplacer)], {
           type: "application/json",
