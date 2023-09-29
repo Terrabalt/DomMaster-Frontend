@@ -15,6 +15,7 @@ export class Wallet {
 export class Receipt {
   id = "";
   title = "";
+  category = "";
   items: ReceiptItem[] = [];
   date: Date = new Date();
   public total () {

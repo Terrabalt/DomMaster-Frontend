@@ -16,14 +16,14 @@ export default function NewReceiptItemRow({onAdd}: Props) {
   return (
     <>
     <tr>
-      <th>
+      <td>
         <input 
           name="newItemDesc" 
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
-      </th>
-      <th>
+      </td>
+      <td>
         <select
           name="newItemType"
           value={itemType}
@@ -35,20 +35,20 @@ export default function NewReceiptItemRow({onAdd}: Props) {
             ))
           }
         </select>
-      </th>
-      <th>
+      </td>
+      <td>
         <MoneyInput value={money} onChange={v => setMoney(v)}/>
-      </th>
-      <th>
+      </td>
+      <td>
         <input
           name="newItemAmount"
           type="number"
           value={amount}
           onChange={e => setAmount(parseInt(e.target.value))}
         />
-      </th>
-      <th>{money.multiply(amount).toString()}</th>
-      <button onClick={() => onAdd(new ReceiptItem("", description, itemType, money, amount))}>Add</button>
+      </td>
+      <td>{money.multiply(amount).toString()}</td>
+      <td><button onClick={() => onAdd(new ReceiptItem("", description, itemType, money, amount))}>Add</button></td>
     </tr>
     </>
   )
