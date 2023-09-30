@@ -119,6 +119,29 @@ export class LocalDatabase implements Database {
       }
     })
   }
+  GetReceiptCategories(): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      if (this.db) {  
+        const result : string[] = [];
+        const request = this.db.transaction(["receipt"], "readonly")
+          .objectStore("receipt")
+          .index("category")
+          .getAll();
+        request.onsuccess = () => {
+          (request.result as Receipt[])
+            .map((v) => v.category)
+            .forEach((v) => !result.includes(v) ? result.push(v) : undefined)
+          resolve(result)
+        }
+        request.onerror = () => {
+          reject(request.error)
+        }
+      } else {
+        reject("local storage has not been initialized")
+      }
+    })
+  }
+  
   
   UpdateReceipt(id: string, receipt:Receipt): Promise<Receipt> {
     return new Promise((resolve, reject) => {

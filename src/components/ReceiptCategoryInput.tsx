@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { Fragment, useCallback, useContext, useEffect, useState } from 'react';
+import { ReceiptDatabase } from '../data/database';
+import { DatabaseContext } from '../data/databaseContext';
 
 interface Props {
   value: string;
@@ -7,8 +9,21 @@ interface Props {
 
 export default function ReceiptCategoryInput({value, onChange} : Props) {
   const [ showDropdown, setShowDropdown ] = useState(false);
-  const [ loading, _setLoading ] = useState(false);
-  const [ suggestions, _setSuggestions ] = useState<string[]>(["TODO", "TODO2"]);
+  const [ loading, setLoading ] = useState(false);
+  const [ suggestions, setSuggestions ] = useState<string[]>([]);
+
+  const {database: db, loading: dbLoading} = useContext(DatabaseContext)
+  const getSuggestions = useCallback(async (db:ReceiptDatabase) => {
+    const response = await db.GetReceiptCategories();
+    setSuggestions(response)
+  }, [db, dbLoading])
+
+  useEffect(() => {
+    if (db && !loading) {
+      getSuggestions(db)
+    }
+    setLoading(false)
+  }, [db, dbLoading, getSuggestions])
 
   return <>
     <label>Category:
