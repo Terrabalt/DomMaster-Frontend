@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { getReceipts } from '../data/database';
+import { ReceiptDatabase } from '../data/database';
 import { Receipt } from '../dataclass';
+import { getMonthRange } from '../helper/DateHelper';
 
-function Overview() {
+interface Props {
+  database: ReceiptDatabase;
+}
+
+function Overview({database} : Props) {
+  
   const [receipts, setReceipts] = useState<Receipt[]>([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    getReceipts().then(v => {
-      if (v.length > 0) {
-        const currDate = new Date()
-        const thisMonthReceipts = v.filter(val => 
-          val.date.getMonth() == currDate.getMonth() 
-          && val.date.getFullYear() == currDate.getFullYear()
-          )
-        setReceipts(thisMonthReceipts);
-      }
+    database.GetReceipts(getMonthRange(new Date)).then(v => {
+      setReceipts(v);
       setLoading(false)
     })
   }, [])
@@ -28,7 +27,7 @@ function Overview() {
           )
         )
         return concat
-      }, new Receipt(undefined, undefined, []))
+      }, new Receipt())
       .totalToString()
       : "none!";
   }
@@ -41,8 +40,8 @@ function Overview() {
           )
         )
         return concat
-      }, new Receipt(undefined, undefined, []))
-        .totalToString()
+      }, new Receipt()
+      ).totalToString()
       : "none!";
   }
   if (isLoading) return <>Loading...</>
@@ -51,6 +50,7 @@ function Overview() {
       <p></p>
       <p>This month&apos;s saving: {getSaving()}</p>
       <p>This month&apos;s spending: {getSpending()}</p>
+      <hr/>
     </div>
   );
 }

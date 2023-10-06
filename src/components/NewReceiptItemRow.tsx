@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { ReceiptItem, Money, ReceiptItemType, ReceiptItemTypes } from '../dataclass';
 import MoneyInput from './MoneyInput';
+import InputWithValidator, { requiredValidator } from './InputWithValidator';
+import withValidator from '../data/withValidator';
 
 interface Props {
   value?: ReceiptItem;
@@ -12,18 +14,28 @@ export default function NewReceiptItemRow({onAdd}: Props) {
   const [itemType, setItemType] = useState(ReceiptItemTypes[0])
   const [amount, setAmount] = useState(1)
   const [money, setMoney] = useState(new Money())
+  
+  const [descriptionValid, descriptionValidator] = withValidator([ requiredValidator ])
+  const [moneyValid, moneyValidator] = withValidator([ requiredValidator ])
+  const [amountValid, amountValidator] = withValidator([ requiredValidator ])
 
-  return (
-    <>
-    <tr>
-      <th>
-        <input 
-          name="newItemDesc" 
+  const clickAdd = () => {
+    if (descriptionValid && moneyValid && amountValid) {
+      onAdd(new ReceiptItem("", description, itemType, money, amount))
+    }
+  }
+
+  return (<>
+    <tr>  
+      <td>
+        <InputWithValidator 
+          name="newItemDesc"
           value={description}
           onChange={e => setDescription(e.target.value)}
+          validators={[ descriptionValidator ]}
         />
-      </th>
-      <th>
+      </td>
+      <td>
         <select
           name="newItemType"
           value={itemType}
@@ -35,21 +47,25 @@ export default function NewReceiptItemRow({onAdd}: Props) {
             ))
           }
         </select>
-      </th>
-      <th>
-        <MoneyInput value={money} onChange={v => setMoney(v)}/>
-      </th>
-      <th>
-        <input
+      </td>
+      <td>
+        <MoneyInput
+          value={money}
+          onChange={v => setMoney(v)}
+          validators={[ moneyValidator ]}
+        />
+      </td>
+      <td>
+        <InputWithValidator
           name="newItemAmount"
           type="number"
           value={amount}
           onChange={e => setAmount(parseInt(e.target.value))}
+          validators={[ amountValidator ]}
         />
-      </th>
-      <th>{money.multiply(amount).toString()}</th>
-      <button onClick={() => onAdd(new ReceiptItem("", description, itemType, money, amount))}>Add</button>
+      </td>
+      <td>{money.multiply(amount).toString()}</td>
+      <td><button onClick={() => clickAdd()}>Add</button></td>
     </tr>
-    </>
-  )
+  </>)
 }
