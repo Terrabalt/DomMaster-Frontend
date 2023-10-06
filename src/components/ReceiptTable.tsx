@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Receipt, ReceiptItem } from '../dataclass';
 import {FormattedDate} from 'react-intl';
 import ReceiptItemTable from './ReceiptItemTable';
@@ -8,12 +8,15 @@ import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 import ReceiptCategoryInput from './ReceiptCategoryInput';
+import InputWithValidator, { requiredValidator } from './InputWithValidator';
+import withValidator from '../data/withValidator';
 
 interface Props {
     receipt: Receipt;
     onChange?: (newReceipt: Receipt) => void;
+    setValid?: (isValid: boolean) => void;
 }
-export default function ReceiptTable({receipt, onChange}:Props) {  
+export default function ReceiptTable({receipt, onChange, setValid}:Props) {
   function changeItem(items: ReceiptItem[]) {
     if (onChange == undefined) return
     const nReceipt = new Receipt()
@@ -38,29 +41,31 @@ export default function ReceiptTable({receipt, onChange}:Props) {
     Object.assign(nReceipt, receipt, {category: category})
     onChange(nReceipt)
   }
-  return (
-    <div>
+  if (onChange) {
+    const [titleValid, titleValidators] = withValidator([requiredValidator])
+
+    useEffect(() => {
+      setValid && setValid(titleValid && receipt.items.length == 0)
+    }, [titleValid, receipt.items])
+
+    return (
       <div>
-        { onChange? (
+        <div>
           <label>Title:
-            <input value={receipt.title} onChange={(e) => changeTitle(e.target.value)}/>
+            <InputWithValidator
+              value={receipt.title}
+              onChange={(e) => changeTitle(e.target.value)}
+              validators={[ titleValidators ]}
+            />
           </label>
-        ) : (
-          <p>{receipt.title || "#00"}</p>
-        )}
-      </div>
-      <div>
-        { onChange? (
+        </div>
+        <div>
           <ReceiptCategoryInput 
             value={receipt.category}
             onChange={(e) => changeCategory(e)}
           />
-        ) : (
-          <p>Category: {receipt.category || "-"}</p>
-        )}
-      </div>
-      <div>
-        { onChange? (
+        </div>
+        <div>
           <label>Date:
             <DateTimePicker 
               dayAriaLabel="Day"
@@ -68,18 +73,30 @@ export default function ReceiptTable({receipt, onChange}:Props) {
               yearAriaLabel="Year"
               value={receipt.date}
               onChange={v => { 
-                
                 if (v instanceof Date) 
                   changeDate(v as Date)
               }}
             />
           </label>
-        ) : (
-          <FormattedDate value={receipt.date} hour='2-digit' minute='2-digit'/>
-        )}
+        </div>
+        <ReceiptItemTable receipt={receipt} onChange={changeItem}/>
       </div>
-      <ReceiptItemTable receipt={receipt} onChange={onChange ? changeItem : undefined}/>
-    </div>
-  )
+    )
+  } else {
+    return (
+      <div>
+        <div>
+          <p>{receipt.title || "#00"}</p>
+        </div>
+        <div>
+          <p>Category: {receipt.category || "-"}</p>
+        </div>
+        <div>
+          <FormattedDate value={receipt.date} hour='2-digit' minute='2-digit'/>
+        </div>
+        <ReceiptItemTable receipt={receipt}/>
+      </div>
+    )
+  }
 }
   

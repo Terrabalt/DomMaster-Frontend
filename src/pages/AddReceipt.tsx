@@ -12,15 +12,16 @@ interface Props {
 function AddReceipt({database} : Props) {
   const navigate = useNavigate()
   const [receipt, setReceipt] = useState<Receipt>(new Receipt());
-  
+  const [isValid, setValid] = useState(false);
+
   return (
     <div>
       <Link to="..">return</Link>
-      <ReceiptTable receipt={receipt} onChange={v => {setReceipt(v)}}/>
+      <ReceiptTable receipt={receipt} onChange={v => {setReceipt(v)}} setValid={setValid}/>
       <button
         id='finish-add'
         onClick={() => {
-          if (receipt.title.trim() == "" || receipt.items.length == 0) return;
+          if (!isValid) return;
           database.AddReceipt(receipt).then(()=>{
             navigate(-1);
           })

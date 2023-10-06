@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback, useContext, useEffect, useState } from 'react';
 import { ReceiptDatabase } from '../data/database';
 import { DatabaseContext } from '../data/databaseContext';
+import InputWithValidator, { requiredValidator } from './InputWithValidator';
 
 interface Props {
   value: string;
@@ -27,11 +28,12 @@ export default function ReceiptCategoryInput({value, onChange} : Props) {
 
   return <>
     <label>Category:
-      <input
+      <InputWithValidator
         type="text"
         value={value}
         onFocus={() => setShowDropdown(true)}
         onChange={(e) => onChange(e.target.value)}
+        validators={[ requiredValidator ]}
       />
       { showDropdown && (
         <div>

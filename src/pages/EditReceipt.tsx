@@ -14,6 +14,7 @@ export default function EditReceipt({database} : Props) {
   const { id } = useParams()
   const [receipt, setReceipt] = useState<Receipt>(new Receipt());
   const [isLoading, setLoading] = useState(true);
+  const [isValid, setValid] = useState(true);
 
   useEffect(() => {
     if (id)
@@ -29,11 +30,11 @@ export default function EditReceipt({database} : Props) {
   return (
     <div>
       <Link to="..">return</Link>
-      <ReceiptTable receipt={receipt} onChange={v => {setReceipt(v)}}/>
+      <ReceiptTable receipt={receipt} onChange={v => {setReceipt(v)}} setValid={setValid}/>
       <button
         id='finish-edit'
         onClick={() => {
-          if (receipt.title.trim() == "" || receipt.items.length == 0) return;
+          if (!isValid) return;
           database.UpdateReceipt(id||"", receipt).then(()=>{
             navigate(-1);
           })
