@@ -1,14 +1,16 @@
-import React, { Fragment, useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ReceiptDatabase } from '../data/database';
 import { DatabaseContext } from '../data/databaseContext';
-import InputWithValidator, { requiredValidator } from './InputWithValidator';
+import InputWithValidator from './InputWithValidator';
+import { ValidatorStack } from '../data/withValidator';
 
 interface Props {
   value: string;
   onChange: (newValue: string) => void;
+  validators?: ValidatorStack
 }
 
-export default function ReceiptCategoryInput({value, onChange} : Props) {
+export default function ReceiptCategoryInput({value, onChange, validators = []} : Props) {
   const [ showDropdown, setShowDropdown ] = useState(false);
   const [ loading, setLoading ] = useState(false);
   const [ suggestions, setSuggestions ] = useState<string[]>([]);
@@ -33,7 +35,7 @@ export default function ReceiptCategoryInput({value, onChange} : Props) {
         value={value}
         onFocus={() => setShowDropdown(true)}
         onChange={(e) => onChange(e.target.value)}
-        validators={[ requiredValidator ]}
+        validators={validators}
       />
       { showDropdown && (
         <div>
