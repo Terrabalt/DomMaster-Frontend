@@ -1,5 +1,6 @@
 import { Database } from "./database"
 import { Receipt, ReceiptAssign } from "../dataclass"
+import { BigIntReviver } from "../helper/BigIntHelper";
 
 const dbname = "dommaster_local";
 
@@ -41,6 +42,26 @@ export function NewLocalDatabase():Promise<LocalDatabase> {
     return Promise.resolve(ldb)
   }, (e) => {
     return Promise.reject(e)
+  })
+}
+export function ImportLocalDatabase(file?:File):Promise<LocalDatabase> {
+  return new Promise((resolve, reject) => {
+    let db : LocalDatabase
+    if (file) {
+      NewLocalDatabase()
+        .then(async (database) => {
+          db = database
+          const obj : object[] = JSON.parse(await file.text(), BigIntReviver)
+          const receipts = obj.map((v) => ReceiptAssign(v))
+          await db.AddReceipts(receipts)
+          
+          resolve(db)
+        }).catch((e) => {
+          reject(e)
+        })
+    } else {
+      reject("File is empty")
+    }
   })
 }
 const IndxDb: IDBFactory = window.indexedDB;
@@ -177,6 +198,35 @@ export class LocalDatabase implements Database {
         request.onerror = () => {
           reject(request.error)
         }
+      } else {
+        reject("local storage has not been initialized")
+      }
+    })
+  }
+  AddReceipts(receipts:Receipt[]): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.db) {
+        const transaction = this.db.transaction(["receipt"], "readwrite")
+        const store = transaction.objectStore("receipt");
+
+        const puts = receipts.map((receipt) => new Promise((rs, rj) => {
+          const request = store.put(receipt)
+          request.onsuccess = () => {
+            receipt.id = request.result.toString()
+            rs(receipt)
+          }
+          request.onerror = () => {
+            rj(request.error)
+          }
+        }))
+        Promise.all(puts)
+          .then(
+            () => {
+              transaction.commit(); resolve()
+            },
+            (e) => reject(e)
+          )
+        
       } else {
         reject("local storage has not been initialized")
       }

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Database } from '../data/database';
-import { IsLocalDatabaseExist, LocalDatabase, NewLocalDatabase } from '../data/localDatabase';
+import { ImportLocalDatabase, IsLocalDatabaseExist, LocalDatabase, NewLocalDatabase } from '../data/localDatabase';
 import '../css/index.css';
 import { IntlProvider } from 'react-intl';
 import { getLocale } from '../data/settings';
@@ -12,11 +12,30 @@ interface Props {
   
 export default function Landing({onNewDatabase} : Props) {
   const [isLocalDatabaseExist, setLocalDatabaseExist] = useState(false);
+  const inputFile = useRef<HTMLInputElement | null>(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     IsLocalDatabaseExist()
       .then((v) => setLocalDatabaseExist(v))
   })
-
+  const onFileInputChange = () => {
+    const file = inputFile.current?.files?.item(0)
+    if (file) {
+      setLoading(true)
+      ImportLocalDatabase(file)
+        .then(async (database) => {
+            setLoading(false)
+            onNewDatabase(database)
+        }).catch((e) => {
+          console.error(e)
+          setLoading(false)
+        })
+    }
+  }
+  const onButtonClick = () => {
+    inputFile.current?.click();
+  };
+  if (loading) return <p>loading...</p>
   return (
     <IntlProvider locale={getLocale()}>
       <div id={"header"}>
@@ -50,6 +69,20 @@ export default function Landing({onNewDatabase} : Props) {
                 >Use Existing Local Account</button>
               </p>
             :<></>}
+            <p>
+              <input
+                type='file'
+                id='import'
+                accept=".bak"
+                onChange={() => onFileInputChange()}
+                ref={inputFile}
+                style={{display: 'none'}}
+              />
+              <button
+                id='import-local-account'
+                onClick={() => onButtonClick()}
+              >Import Account File</button>
+            </p>
           </div>
         </center>
       </div>
