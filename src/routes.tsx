@@ -11,7 +11,6 @@ import ErrorPage from './pages/ErrorPage';
 import Config from './pages/Config';
 import { Database } from './data/database';
 import Landing from './pages/Landing';
-import ExportPage from './pages/Export';
 import { setLoggedIn } from './data/settings';
 import { DatabaseContext } from './data/databaseContext';
 
@@ -38,11 +37,10 @@ export default function AppRoutes() {
             <Route path="*" element={<></>} ></Route>
             : database?
             <>
-              <Route path="/" element={<Layout />} >
+              <Route path="/" element={<Layout onLogout={onLogout}/>} >
                 <Route index element={<Overview database={database} />} />
                 <Route path="/error" element={<ErrorPage />} />
-                <Route path="/export" element={<ExportPage database={database}/>} />
-                <Route path="/config" element={<Config onLogout={onLogout}/>} />
+                <Route path="/config" element={<Config database={database}/>} />
                 <Route path="/receipts"> 
                   <Route index element={<ListReceipts database={database} />}/>
                   <Route path="add" element={<AddReceipt database={database} />} />

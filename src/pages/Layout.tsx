@@ -3,7 +3,11 @@ import {Link, Outlet} from 'react-router-dom';
 import '../css/index.css';
 import { FormattedMessage } from 'react-intl';
 
-export default function Layout() {
+interface Props {
+  onLogout: () => void;
+}
+
+export default function Layout({onLogout} : Props) {
     return (
       <>
         <div id={"header"}>
@@ -29,15 +33,15 @@ export default function Layout() {
                   id="eKwlPA"
                   description="config-layout-text-button"
                   defaultMessage="Config"
-                />
-              </Link>
-              <Link to="/export">
-                <FormattedMessage
-                  id="TmH52m"
-                  description="export-layout-text-button"
-                  defaultMessage="Export"
                   />
                 </Link>
+              <a href="/" onClick={() => onLogout()}>
+                <FormattedMessage
+                  id="TQH3tN"
+                  description="logout-layout-text-button"
+                  defaultMessage="Logout"
+                />
+              </a>
             </div>
           </center>
         </div>

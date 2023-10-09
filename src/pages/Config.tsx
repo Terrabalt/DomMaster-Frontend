@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getCurrencyPreference, getLocale, localeList, setCurrencyPreference, setLocale } from '../data/settings';
 import { CurrencyDescription, ListCurrencyCodes } from '../currencyCode';
 import { FormattedMessage } from 'react-intl';
+import { BigIntReplacer } from '../helper/BigIntHelper';
+import { Database } from '../data/database';
 
 interface Props {
-  onLogout: () => void;
+  database: Database;
 }
 
-export default function Config({onLogout}:Props) {
+export default function Config({database,}:Props) {
   const [locale, setLocaleState] = useState(getLocale())
   const [currencyPreference, setCurrencyPreferenceState] = useState(getCurrencyPreference())
+  const [exportCreated, setExportCreated] = useState(false)
+  const [exportObjectUrl, setExportObjectUrl] = useState("")
+  
+  useEffect(() => {
+    database.GetReceipts().then(
+      (receipts) => {
+        const blob = new Blob([JSON.stringify(receipts, BigIntReplacer)], {
+          type: "application/json",
+        })
+        setExportObjectUrl(URL.createObjectURL(blob))
+        setExportCreated(true)
+      }, (e) => {
+        console.error(`Error creating export; ${e}`)
+      }
+    )
+  })
+
   function onLocaleChange(newLocale: string) {
     setLocale(newLocale)
     setLocaleState(getLocale())
@@ -63,17 +82,20 @@ export default function Config({onLogout}:Props) {
       </label>
     </p>
     <p>
-      <button
-        id='logout'
-        onClick={() => {
-          onLogout();
-        }}
+      <a
+        href={exportObjectUrl}
+        download={`DomMaster_${new Date().getTime()}.bak`}
       >
-        <FormattedMessage
-          description="logout-button"
-          defaultMessage="Logout" id="uVEx/N"
-        />
-      </button>
+        <button
+          id='export-account'
+          disabled={!exportCreated}
+        >
+          <FormattedMessage
+            description="export-account-button"
+            defaultMessage="Export current account" id="YbkLom"
+          />
+        </button>
+      </a>
     </p>
   </div>
 }
