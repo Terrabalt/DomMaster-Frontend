@@ -15,9 +15,9 @@ export default function NewReceiptItemRow({onAdd}: Props) {
   const [amount, setAmount] = useState(1)
   const [money, setMoney] = useState(new Money())
   
-  const [descriptionValid, descriptionValidator] = withValidator([ requiredValidator ])
-  const [moneyValid, moneyValidator] = withValidator([ requiredValidator ])
-  const [amountValid, amountValidator] = withValidator([ requiredValidator ])
+  const [descriptionValid, descriptionValidator] = withValidator([ requiredValidator ], description)
+  const [moneyValid, moneyValidator] = withValidator([ requiredValidator ], money.toString())
+  const [amountValid, amountValidator] = withValidator([ requiredValidator ], amount)
 
   const clickAdd = () => {
     if (descriptionValid && moneyValid && amountValid) {

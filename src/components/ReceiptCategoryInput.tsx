@@ -3,6 +3,7 @@ import { ReceiptDatabase } from '../data/database';
 import { DatabaseContext } from '../data/databaseContext';
 import InputWithValidator from './InputWithValidator';
 import { ValidatorStack } from '../data/withValidator';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
   value: string;
@@ -12,7 +13,7 @@ interface Props {
 
 export default function ReceiptCategoryInput({value, onChange, validators = []} : Props) {
   const [ showDropdown, setShowDropdown ] = useState(false);
-  const [ loading, setLoading ] = useState(false);
+  const [ isLoading, setLoading ] = useState(false);
   const [ suggestions, setSuggestions ] = useState<string[]>([]);
 
   const {database: db, loading: dbLoading} = useContext(DatabaseContext)
@@ -22,7 +23,7 @@ export default function ReceiptCategoryInput({value, onChange, validators = []} 
   }, [db, dbLoading])
 
   useEffect(() => {
-    if (db && !loading) {
+    if (db && !isLoading) {
       getSuggestions(db)
     }
     setLoading(false)
@@ -39,8 +40,8 @@ export default function ReceiptCategoryInput({value, onChange, validators = []} 
       />
       { showDropdown && (
         <div>
-          { loading ? (
-            <div>Loading...</div>
+          { isLoading ? (
+            <div><FormattedMessage description="loading-text" defaultMessage="Loading..." id="gWo/FW" /></div>
           ) : (suggestions && suggestions.length > 0) ? (
             <>
               {suggestions.map((suggestion, index) => (

@@ -10,8 +10,8 @@ export const Validate = (value?:Value, validators : ValidatorStack = []) => {
   }, undefined)
 }
 
-export default function withValidator(validators : ValidatorFunc[]) : [boolean, ValidatorFunc] {
-  const [validated, setValidated] = useState(false)
+export default function withValidator(validators : ValidatorFunc[], value?: Value) : [boolean, ValidatorFunc] {
+  const [validated, setValidated] = useState(value? Validate(value, validators) == undefined : false)
   const validator = useCallback((value?:Value) => {
     const error = Validate(value, validators)
     setValidated(error == undefined)

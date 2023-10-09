@@ -1,0 +1,246 @@
+{
+  "/Um7BD": [
+    {
+      "type": 0,
+      "value": "Title"
+    }
+  ],
+  "2oZuFm": [
+    {
+      "type": 0,
+      "value": "Type"
+    }
+  ],
+  "5PbCMn": [
+    {
+      "type": 0,
+      "value": "This month's saving: "
+    },
+    {
+      "type": 1,
+      "value": "saving"
+    }
+  ],
+  "5uoVuy": [
+    {
+      "type": 0,
+      "value": "Home"
+    }
+  ],
+  "909D/G": [
+    {
+      "type": 0,
+      "value": "Return"
+    }
+  ],
+  "9RC+kM": [
+    {
+      "type": 0,
+      "value": "Actions"
+    }
+  ],
+  "AEG4R+": [
+    {
+      "type": 0,
+      "value": "Edit"
+    }
+  ],
+  "B4aEPT": [
+    {
+      "type": 0,
+      "value": "Date:"
+    }
+  ],
+  "BBC+iQ": [
+    {
+      "type": 0,
+      "value": "Title:"
+    }
+  ],
+  "BzC5iZ": [
+    {
+      "type": 0,
+      "value": "Total:"
+    }
+  ],
+  "Dh6tvM": [
+    {
+      "type": 0,
+      "value": "Date"
+    }
+  ],
+  "IBp5wg": [
+    {
+      "type": 0,
+      "value": "This month's spending: "
+    },
+    {
+      "type": 1,
+      "value": "spending"
+    }
+  ],
+  "LjWUeh": [
+    {
+      "type": 0,
+      "value": "Add new."
+    }
+  ],
+  "MAQLOQ": [
+    {
+      "type": 0,
+      "value": "Receipts"
+    }
+  ],
+  "MrNBXp": [
+    {
+      "type": 0,
+      "value": "Cost"
+    }
+  ],
+  "TmH52m": [
+    {
+      "type": 0,
+      "value": "Export"
+    }
+  ],
+  "XM5Ys3": [
+    {
+      "type": 0,
+      "value": "View"
+    }
+  ],
+  "YbkLom": [
+    {
+      "type": 0,
+      "value": "Export current account"
+    }
+  ],
+  "Z1nz7d": [
+    {
+      "type": 0,
+      "value": "Edit"
+    }
+  ],
+  "e9m7MD": [
+    {
+      "type": 0,
+      "value": "Prefered currency for new item:"
+    }
+  ],
+  "eKwlPA": [
+    {
+      "type": 0,
+      "value": "Config"
+    }
+  ],
+  "g4OfVl": [
+    {
+      "type": 0,
+      "value": "Category: "
+    },
+    {
+      "type": 1,
+      "value": "category"
+    }
+  ],
+  "gWo/FW": [
+    {
+      "type": 0,
+      "value": "Loading..."
+    }
+  ],
+  "k+yw42": [
+    {
+      "type": 0,
+      "value": "Import Account File"
+    }
+  ],
+  "lPPB5V": [
+    {
+      "type": 0,
+      "value": "Receipts"
+    }
+  ],
+  "mrM+Oi": [
+    {
+      "type": 0,
+      "value": "New Local Account"
+    }
+  ],
+  "mtguTx": [
+    {
+      "type": 0,
+      "value": "Total"
+    }
+  ],
+  "nBfm++": [
+    {
+      "type": 0,
+      "value": "Error 404: not found!"
+    }
+  ],
+  "nZE/Ow": [
+    {
+      "type": 0,
+      "value": "Finish"
+    }
+  ],
+  "nt0Y55": [
+    {
+      "type": 0,
+      "value": "Language:"
+    }
+  ],
+  "oneaDR": [
+    {
+      "type": 0,
+      "value": "Amount"
+    }
+  ],
+  "poQ2pU": [
+    {
+      "type": 0,
+      "value": "Total"
+    }
+  ],
+  "s5YaBy": [
+    {
+      "type": 0,
+      "value": "Use Existing Local Account"
+    }
+  ],
+  "sFKORz": [
+    {
+      "type": 0,
+      "value": "Return"
+    }
+  ],
+  "uVEx/N": [
+    {
+      "type": 0,
+      "value": "Logout"
+    }
+  ],
+  "vRM+fv": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "xlXR7n": [
+    {
+      "type": 0,
+      "value": "No receipts. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Add new."
+        }
+      ],
+      "type": 8,
+      "value": "Link"
+    }
+  ]
+}

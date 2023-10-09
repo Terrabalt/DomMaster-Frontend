@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getCurrencyPreference, getLocale, localeList, setCurrencyPreference, setLocale } from '../data/settings';
 import { CurrencyDescription, ListCurrencyCodes } from '../currencyCode';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
   onLogout: () => void;
@@ -12,6 +13,7 @@ export default function Config({onLogout}:Props) {
   function onLocaleChange(newLocale: string) {
     setLocale(newLocale)
     setLocaleState(getLocale())
+    window.location.reload()
   }
 
   function onCurrencyPreferenceChange(newCurrencyPreference: string) {
@@ -22,7 +24,10 @@ export default function Config({onLogout}:Props) {
   return <div>
     <p>
       <label>
-        Language:
+        <FormattedMessage
+            description="language-selector-label"
+            defaultMessage="Language:" id="nt0Y55"
+        />
         <select
           style={{maxWidth:100}}
           name="language"
@@ -39,7 +44,10 @@ export default function Config({onLogout}:Props) {
     </p>
     <p>
       <label>
-        New currency preference:
+        <FormattedMessage
+          description="prefered-currency-selector-label"
+          defaultMessage="Prefered currency for new item:" id="e9m7MD"
+        />
         <select
           style={{maxWidth:100}}
           name="newItemCurrency"
@@ -60,7 +68,12 @@ export default function Config({onLogout}:Props) {
         onClick={() => {
           onLogout();
         }}
-      >Logout</button>
+      >
+        <FormattedMessage
+          description="logout-button"
+          defaultMessage="Logout" id="uVEx/N"
+        />
+      </button>
     </p>
   </div>
 }

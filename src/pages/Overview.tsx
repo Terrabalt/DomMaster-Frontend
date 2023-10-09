@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { ReceiptDatabase } from '../data/database';
 import { Receipt } from '../dataclass';
 import { getMonthRange } from '../helper/DateHelper';
+import { FormattedMessage } from 'react-intl';
+import { AppIntl } from '../App';
 
 interface Props {
   database: ReceiptDatabase;
@@ -29,7 +31,7 @@ function Overview({database} : Props) {
         return concat
       }, new Receipt())
       .totalToString()
-      : "none!";
+      : AppIntl.formatMessage({ id:"w6M3HD", description:"overview-empty-text", defaultMessage:"none!" });
   }
   function getSpending() : string {
     return receipts.length > 0 ? 
@@ -42,14 +44,28 @@ function Overview({database} : Props) {
         return concat
       }, new Receipt()
       ).totalToString()
-      : "none!";
+      : AppIntl.formatMessage({ id:"w6M3HD", description:"overview-empty-text", defaultMessage:"none!" });
   }
-  if (isLoading) return <>Loading...</>
+  if (isLoading) return <><FormattedMessage description="loading-text" defaultMessage="Loading..." id="gWo/FW" /></>
   return ( 
     <div>
-      <p></p>
-      <p>This month&apos;s saving: {getSaving()}</p>
-      <p>This month&apos;s spending: {getSpending()}</p>
+      <p />
+      <p>
+        <FormattedMessage
+          id="5PbCMn"
+          description="saving-text"
+          defaultMessage="This month's saving: {saving}"
+          values={{saving:getSaving()}}
+        />
+      </p>
+      <p>
+        <FormattedMessage
+          id="IBp5wg"
+          description="spending-text"
+          defaultMessage="This month's spending: {spending}"
+          values={{spending:getSpending()}}
+        />
+      </p>
       <hr/>
     </div>
   );
