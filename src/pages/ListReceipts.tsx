@@ -74,7 +74,7 @@ function ListReceipts({database} : Props) {
         : selectedReceipts.length > 0 ? 
           <div>
             <ReceiptsTable receipts={selectedReceipts}/>
-            <Link to={`./add`}>
+            <Link to={`./add`} state={{date:date}}>
               <FormattedMessage
                 id="LjWUeh"
                 description="create-receipt-text-button"
@@ -88,7 +88,7 @@ function ListReceipts({database} : Props) {
               id="xlXR7n"
               description="create-first-receipt-text-button"
               defaultMessage="No receipts. <Link>Add new.</Link>"
-              values={{Link: (chunks) => <Link to={`./add`}>{chunks}</Link>}}
+              values={{Link: (chunks) => <Link to={`./add`} state={{date:date}}>{chunks}</Link>}}
             />
           </p>
       }

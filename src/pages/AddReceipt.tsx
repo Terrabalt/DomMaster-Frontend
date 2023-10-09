@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Receipt } from '../dataclass';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Receipt, ReceiptAssign } from '../dataclass';
 import ReceiptTable from '../components/ReceiptTable';
 
 import { ReceiptDatabase } from '../data/database';
@@ -12,7 +12,7 @@ interface Props {
 
 function AddReceipt({database} : Props) {
   const navigate = useNavigate()
-  const [receipt, setReceipt] = useState<Receipt>(new Receipt());
+  const [receipt, setReceipt] = useState<Receipt>(ReceiptAssign({ date: useLocation().state?.date as Date || new Date() }));
   const [isValid, setValid] = useState(false);
 
   return (
