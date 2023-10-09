@@ -20,11 +20,18 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "formatjs"
     ],
     "rules": {
         "react/jsx-uses-react": "error",
-        "react/jsx-uses-vars": "error"
+        "react/jsx-uses-vars": "error",
+        "formatjs/enforce-id": [
+          "error",
+          {
+            "idInterpolationPattern": "[sha512:contenthash:base64:6]"
+          }
+        ]
     },
     "settings": {
       "react": {

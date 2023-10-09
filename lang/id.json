@@ -1,0 +1,155 @@
+{
+    "/Um7BD": {
+      "defaultMessage": "Judul",
+      "description": "receipts-table-title-column"
+    },
+    "2oZuFm": {
+      "defaultMessage": "Tipe",
+      "description": "receipt-item-type-column"
+    },
+    "5PbCMn": {
+      "defaultMessage": "Penyimpanan minggu ini: {saving}",
+      "description": "saving-text"
+    },
+    "5uoVuy": {
+      "defaultMessage": "Beranda",
+      "description": "home-layout-text-button"
+    },
+    "909D/G": {
+      "defaultMessage": "Kembbali",
+      "description": "goback-text-button"
+    },
+    "9RC+kM": {
+      "defaultMessage": "Aksi-aksi",
+      "description": "receipts-table-actions-column"
+    },
+    "AEG4R+": {
+      "defaultMessage": "Ubah",
+      "description": "receipts-table-row-edit-text-button"
+    },
+    "B4aEPT": {
+      "defaultMessage": "Tanggal:",
+      "description": "receipt-table-input-date"
+    },
+    "BBC+iQ": {
+      "defaultMessage": "Judul:",
+      "description": "receipt-table-input-title"
+    },
+    "BzC5iZ": {
+      "defaultMessage": "Total:",
+      "description": "receipt-item-row-total"
+    },
+    "Dh6tvM": {
+      "defaultMessage": "Tanggal",
+      "description": "receipts-table-date-column"
+    },
+    "IBp5wg": {
+      "defaultMessage": "Penggunaan minggu ini: {spending}",
+      "description": "spending-text"
+    },
+    "LjWUeh": {
+      "defaultMessage": "Tambah baru.",
+      "description": "create-receipt-text-button"
+    },
+    "MAQLOQ": {
+      "defaultMessage": "Kuitansi",
+      "description": "receipts-table-caption"
+    },
+    "MrNBXp": {
+      "defaultMessage": "Biaya",
+      "description": "receipt-item-cost-column"
+    },
+    "TQH3tN": {
+      "defaultMessage": "Logout",
+      "description": "logout-layout-text-button"
+    },
+    "XM5Ys3": {
+      "defaultMessage": "Lihat",
+      "description": "receipts-table-row-view-text-button"
+    },
+    "YbkLom": {
+      "defaultMessage": "Expor akun sekarang",
+      "description": "export-account-button"
+    },
+    "Z1nz7d": {
+      "defaultMessage": "Ubah",
+      "description": "edit-text-button"
+    },
+    "e9m7MD": {
+      "defaultMessage": "Mata uang utama untuk daftar baru:",
+      "description": "prefered-currency-selector-label"
+    },
+    "eKwlPA": {
+      "defaultMessage": "Pengaturan",
+      "description": "config-layout-text-button"
+    },
+    "g4OfVl": {
+      "defaultMessage": "Kategori: {category}",
+      "description": "receipt-table-title"
+    },
+    "gWo/FW": {
+      "defaultMessage": "Memuat...",
+      "description": "loading-text"
+    },
+    "k+yw42": {
+      "defaultMessage": "Impor Berkas Akun",
+      "description": "import-account-button"
+    },
+    "lPPB5V": {
+      "defaultMessage": "Kuitansi",
+      "description": "receipts-layout-text-button"
+    },
+    "mrM+Oi": {
+      "defaultMessage": "Akun Lokal Baru",
+      "description": "new-account-button"
+    },
+    "mtguTx": {
+      "defaultMessage": "Total",
+      "description": "receipt-item-total-column"
+    },
+    "nBfm++": {
+      "defaultMessage": "Galat 404: tidak ditemukan!",
+      "description": "error-404-text"
+    },
+    "nZE/Ow": {
+      "defaultMessage": "Selesaikan",
+      "description": "finish-button"
+    },
+    "nt0Y55": {
+      "defaultMessage": "Bahasa:",
+      "description": "language-selector-label"
+    },
+    "oneaDR": {
+      "defaultMessage": "Jumlah",
+      "description": "receipt-item-amount-column"
+    },
+    "poQ2pU": {
+      "defaultMessage": "Total",
+      "description": "receipts-table-total-column"
+    },
+    "s5YaBy": {
+      "defaultMessage": "Gunakan Akun Lokal Sekarang",
+      "description": "existing-account-button"
+    },
+    "sFKORz": {
+      "defaultMessage": "Kembali",
+      "description": "return-text-button"
+    },
+    "uVEx/N": {
+      "defaultMessage": "Logout",
+      "description": "logout-button"
+    },
+    "vRM+fv": {
+      "defaultMessage": "Deskripsi",
+      "description": "receipt-item-description-column"
+    },
+    "w6M3HD": {
+      "defaultMessage": "kosong!",
+      "description": "overview-empty-text"
+    },
+    "xlXR7n": {
+      "defaultMessage": "Tidak ada kuitansi. <Link>Tambah baru.</Link>",
+      "description": "create-first-receipt-text-button"
+    }
+  }
+  

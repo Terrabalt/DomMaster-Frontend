@@ -1,0 +1,252 @@
+{
+  "/Um7BD": [
+    {
+      "type": 0,
+      "value": "Judul"
+    }
+  ],
+  "2oZuFm": [
+    {
+      "type": 0,
+      "value": "Tipe"
+    }
+  ],
+  "5PbCMn": [
+    {
+      "type": 0,
+      "value": "Penyimpanan minggu ini: "
+    },
+    {
+      "type": 1,
+      "value": "saving"
+    }
+  ],
+  "5uoVuy": [
+    {
+      "type": 0,
+      "value": "Beranda"
+    }
+  ],
+  "909D/G": [
+    {
+      "type": 0,
+      "value": "Kembbali"
+    }
+  ],
+  "9RC+kM": [
+    {
+      "type": 0,
+      "value": "Aksi-aksi"
+    }
+  ],
+  "AEG4R+": [
+    {
+      "type": 0,
+      "value": "Ubah"
+    }
+  ],
+  "B4aEPT": [
+    {
+      "type": 0,
+      "value": "Tanggal:"
+    }
+  ],
+  "BBC+iQ": [
+    {
+      "type": 0,
+      "value": "Judul:"
+    }
+  ],
+  "BzC5iZ": [
+    {
+      "type": 0,
+      "value": "Total:"
+    }
+  ],
+  "Dh6tvM": [
+    {
+      "type": 0,
+      "value": "Tanggal"
+    }
+  ],
+  "IBp5wg": [
+    {
+      "type": 0,
+      "value": "Penggunaan minggu ini: "
+    },
+    {
+      "type": 1,
+      "value": "spending"
+    }
+  ],
+  "LjWUeh": [
+    {
+      "type": 0,
+      "value": "Tambah baru."
+    }
+  ],
+  "MAQLOQ": [
+    {
+      "type": 0,
+      "value": "Kuitansi"
+    }
+  ],
+  "MrNBXp": [
+    {
+      "type": 0,
+      "value": "Biaya"
+    }
+  ],
+  "TQH3tN": [
+    {
+      "type": 0,
+      "value": "Logout"
+    }
+  ],
+  "XM5Ys3": [
+    {
+      "type": 0,
+      "value": "Lihat"
+    }
+  ],
+  "YbkLom": [
+    {
+      "type": 0,
+      "value": "Expor akun sekarang"
+    }
+  ],
+  "Z1nz7d": [
+    {
+      "type": 0,
+      "value": "Ubah"
+    }
+  ],
+  "e9m7MD": [
+    {
+      "type": 0,
+      "value": "Mata uang utama untuk daftar baru:"
+    }
+  ],
+  "eKwlPA": [
+    {
+      "type": 0,
+      "value": "Pengaturan"
+    }
+  ],
+  "g4OfVl": [
+    {
+      "type": 0,
+      "value": "Kategori: "
+    },
+    {
+      "type": 1,
+      "value": "category"
+    }
+  ],
+  "gWo/FW": [
+    {
+      "type": 0,
+      "value": "Memuat..."
+    }
+  ],
+  "k+yw42": [
+    {
+      "type": 0,
+      "value": "Impor Berkas Akun"
+    }
+  ],
+  "lPPB5V": [
+    {
+      "type": 0,
+      "value": "Kuitansi"
+    }
+  ],
+  "mrM+Oi": [
+    {
+      "type": 0,
+      "value": "Akun Lokal Baru"
+    }
+  ],
+  "mtguTx": [
+    {
+      "type": 0,
+      "value": "Total"
+    }
+  ],
+  "nBfm++": [
+    {
+      "type": 0,
+      "value": "Galat 404: tidak ditemukan!"
+    }
+  ],
+  "nZE/Ow": [
+    {
+      "type": 0,
+      "value": "Selesaikan"
+    }
+  ],
+  "nt0Y55": [
+    {
+      "type": 0,
+      "value": "Bahasa:"
+    }
+  ],
+  "oneaDR": [
+    {
+      "type": 0,
+      "value": "Jumlah"
+    }
+  ],
+  "poQ2pU": [
+    {
+      "type": 0,
+      "value": "Total"
+    }
+  ],
+  "s5YaBy": [
+    {
+      "type": 0,
+      "value": "Gunakan Akun Lokal Sekarang"
+    }
+  ],
+  "sFKORz": [
+    {
+      "type": 0,
+      "value": "Kembali"
+    }
+  ],
+  "uVEx/N": [
+    {
+      "type": 0,
+      "value": "Logout"
+    }
+  ],
+  "vRM+fv": [
+    {
+      "type": 0,
+      "value": "Deskripsi"
+    }
+  ],
+  "w6M3HD": [
+    {
+      "type": 0,
+      "value": "kosong!"
+    }
+  ],
+  "xlXR7n": [
+    {
+      "type": 0,
+      "value": "Tidak ada kuitansi. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Tambah baru."
+        }
+      ],
+      "type": 8,
+      "value": "Link"
+    }
+  ]
+}

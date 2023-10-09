@@ -6,6 +6,7 @@ import { ReceiptDatabase } from '../data/database';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import ReceiptTable from '../components/ReceiptTable';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
   database: ReceiptDatabase;
@@ -31,18 +32,18 @@ function ViewReceipt({database} : Props) {
       redirect("/error")
   }, [])
 
-  if (isLoading) return <>Loading...</>
+  if (isLoading) return <><FormattedMessage id="gWo/FW" description="loading-text" defaultMessage="Loading..." /></>
   if (receipt === undefined) return <Navigate to="/error"/>
   return (
     <div>
-      <Link to="..">return</Link>
+      <Link to=".."><FormattedMessage id="sFKORz" description="return-text-button" defaultMessage="Return"/></Link>
       <ReceiptTable receipt={receipt}/>
       <button
         id='start-edit'
         onClick={() => {
           navigate('./edit');
         }}
-      >Edit</button>
+      ><FormattedMessage id="Z1nz7d" description="edit-text-button" defaultMessage="Edit"/></button>
     </div>
   )
 }

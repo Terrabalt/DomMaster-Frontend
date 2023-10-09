@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Receipt, ReceiptItem } from '../dataclass';
-import {FormattedDate} from 'react-intl';
+import {FormattedDate, FormattedMessage} from 'react-intl';
 import ReceiptItemTable from './ReceiptItemTable';
 import DateTimePicker from 'react-datetime-picker';
 
@@ -42,16 +42,20 @@ export default function ReceiptTable({receipt, onChange, setValid}:Props) {
     onChange(nReceipt)
   }
   if (onChange) {
-    const [titleValid, titleValidators] = withValidator([requiredValidator])
+    const [titleValid, titleValidators] = withValidator([requiredValidator], receipt.title)
 
     useEffect(() => {
-      setValid && setValid(titleValid && receipt.items.length == 0)
+      if (setValid) setValid(titleValid && receipt.items.length > 0)
     }, [titleValid, receipt.items])
 
     return (
       <div>
         <div>
-          <label>Title:
+          <label>
+            <FormattedMessage
+              description="receipt-table-input-title"
+              defaultMessage="Title:" id="BBC+iQ"
+            />
             <InputWithValidator
               value={receipt.title}
               onChange={(e) => changeTitle(e.target.value)}
@@ -66,7 +70,11 @@ export default function ReceiptTable({receipt, onChange, setValid}:Props) {
           />
         </div>
         <div>
-          <label>Date:
+          <label>
+            <FormattedMessage
+              description="receipt-table-input-date"
+              defaultMessage="Date:" id="B4aEPT"
+            />
             <DateTimePicker 
               dayAriaLabel="Day"
               monthAriaLabel="Month"
@@ -89,7 +97,13 @@ export default function ReceiptTable({receipt, onChange, setValid}:Props) {
           <p>{receipt.title || "#00"}</p>
         </div>
         <div>
-          <p>Category: {receipt.category || "-"}</p>
+          <p>
+            <FormattedMessage
+              description="receipt-table-title"
+              defaultMessage="Category: {category}" id="g4OfVl"
+              values={{category: receipt.category || "-"}}
+            />
+          </p>
         </div>
         <div>
           <FormattedDate value={receipt.date} hour='2-digit' minute='2-digit'/>

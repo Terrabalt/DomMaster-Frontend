@@ -4,6 +4,7 @@ import { Receipt } from '../dataclass';
 
 import { ReceiptDatabase } from '../data/database';
 import ReceiptTable from '../components/ReceiptTable';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
   database: ReceiptDatabase;
@@ -26,10 +27,15 @@ export default function EditReceipt({database} : Props) {
       redirect("/error")
   }, [])
 
-  if (isLoading) return <>Loading...</>
+  if (isLoading) return <><FormattedMessage description="loading-text" defaultMessage="Loading..." id="gWo/FW" /></>
   return (
     <div>
-      <Link to="..">return</Link>
+      <Link to="..">
+        <FormattedMessage
+          description="goback-text-button"
+          defaultMessage="Return" id="909D/G"
+        />
+      </Link>
       <ReceiptTable receipt={receipt} onChange={v => {setReceipt(v)}} setValid={setValid}/>
       <button
         id='finish-edit'
@@ -39,7 +45,12 @@ export default function EditReceipt({database} : Props) {
             navigate(-1);
           })
         }}
-      >Finish</button>
+      >
+        <FormattedMessage
+          description="finish-button"
+          defaultMessage="Finish" id="nZE/Ow"
+        />
+      </button>
     </div>
   )
 }

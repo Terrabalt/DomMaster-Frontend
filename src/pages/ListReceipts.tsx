@@ -8,6 +8,7 @@ import 'react-calendar/dist/Calendar.css';
 import { ReceiptsTable } from '../components/ReceiptsTable';
 import Calendar from 'react-calendar';
 import { getMonthRange, isDateOnDay } from '../helper/DateHelper';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
   database: ReceiptDatabase;
@@ -69,14 +70,27 @@ function ListReceipts({database} : Props) {
         value={date}
       />
       { isLoading ?
-          <>Loading...</>
+          <><FormattedMessage description="loading-text" defaultMessage="Loading..." id="gWo/FW" /></>
         : selectedReceipts.length > 0 ? 
           <div>
             <ReceiptsTable receipts={selectedReceipts}/>
-            <Link to={`./add`}>Add new</Link>
+            <Link to={`./add`} state={{date:date}}>
+              <FormattedMessage
+                id="LjWUeh"
+                description="create-receipt-text-button"
+                defaultMessage="Add new."
+              />
+            </Link>
           </div> 
         :
-          <p>No receipts. <Link to={`./add`}>Add new.</Link></p>
+          <p>
+            <FormattedMessage
+              id="xlXR7n"
+              description="create-first-receipt-text-button"
+              defaultMessage="No receipts. <Link>Add new.</Link>"
+              values={{Link: (chunks) => <Link to={`./add`} state={{date:date}}>{chunks}</Link>}}
+            />
+          </p>
       }
     </div>
   )

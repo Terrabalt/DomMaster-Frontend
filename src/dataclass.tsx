@@ -45,7 +45,7 @@ export class Receipt {
     return total.length > 0 ?
       total
       .map(v => v.toString())
-      .reduce((p, c) => `${p} + ${c}`)
+      .reduce((p, c) => `${p}, ${c}`)
       
     : '-'
   }
@@ -94,9 +94,10 @@ export class Money {
     this.currency = currency;
   }
   public toString() : string { //TODO: Proper formatting with locale
-    const full = this.amount / BigInt(100);
-    const fraction = Math.abs(Number(this.amount - (full * BigInt(100))));
-    return `${CurrencySymbol(this.currency)}${full},${fraction}`
+    const sign = BigInt(this.amount < 0 ? -1 : 1);
+    const full = (this.amount * sign) / BigInt(100);
+    const fraction = Math.abs(Number((this.amount * sign) - (full * BigInt(100))));
+    return `${this.amount < 0 ? "-" : ""}${CurrencySymbol(this.currency)}${full},${fraction}`
   }
   public multiply(times: number) : Money {
     return new Money(this.amount * BigInt(times), this.currency)
