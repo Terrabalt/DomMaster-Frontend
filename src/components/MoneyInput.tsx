@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Money } from '../dataclass';
 import { CurrencyDescription, CurrencySymbol, ListCurrencyCodes } from '../currencyCode';
 import InputWithValidator from './InputWithValidator';
 import { ValidatorStack } from '../data/withValidator';
+import { DecimalMark } from '../data/const';
 
 interface Props {
   value: Money;
@@ -11,8 +12,22 @@ interface Props {
 }
 
 export default function MoneyInput({value, onChange, validators}: Props) {
+  const inputText = useMemo(() => {
+    const whole = value.amount / BigInt(100)
+    const decimal = value.amount % BigInt(100)
+
+    return `${whole}${DecimalMark}${decimal.toString().padStart(2, "0")}`
+  }, [value.amount])
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(new Money(BigInt(e.target.value), value.currency))
+    try {
+      const decimalMarkRemoved = (e.target.value as string).replace(DecimalMark, "")
+      const bigInt = BigInt(decimalMarkRemoved)
+      onChange(new Money(bigInt, value.currency))
+    } catch (e) {
+      if (e instanceof SyntaxError) return
+      else throw e
+    }
   }
 
   return (
@@ -32,8 +47,7 @@ export default function MoneyInput({value, onChange, validators}: Props) {
       <InputWithValidator
         aria-label={CurrencySymbol(value.currency)}
         name="newItemCost"
-        type="number"
-        value={value.amount.toString()}
+        value={inputText}
         onChange={handleChange}
         validators={validators}
       />

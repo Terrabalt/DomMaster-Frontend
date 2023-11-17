@@ -1,4 +1,5 @@
 import { CurrencyCode, CurrencySymbol } from "./currencyCode";
+import { DecimalMark } from "./data/const";
 import { getCurrencyPreference } from "./data/settings";
 
 export class Wallet {
@@ -97,7 +98,7 @@ export class Money {
     const sign = BigInt(this.amount < 0 ? -1 : 1);
     const full = (this.amount * sign) / BigInt(100);
     const fraction = Math.abs(Number((this.amount * sign) - (full * BigInt(100))));
-    return `${this.amount < 0 ? "-" : ""}${CurrencySymbol(this.currency)}${full},${fraction}`
+    return `${this.amount < 0 ? "-" : ""}${CurrencySymbol(this.currency)}${full}${DecimalMark}${fraction.toString().padStart(2, "0")}`
   }
   public multiply(times: number) : Money {
     return new Money(this.amount * BigInt(times), this.currency)
