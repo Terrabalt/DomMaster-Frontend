@@ -27,7 +27,7 @@ export default function InputWithValidator({ validators = [], onChange, onBlur, 
     onBlur && onBlur(e)
   }
 
-  return <div>
+  return <>
     <input
       onChange={handleChange}
       onBlur={handleBlur}
@@ -35,7 +35,7 @@ export default function InputWithValidator({ validators = [], onChange, onBlur, 
       {...rest}
     />
     { error && <div id="error">{error}</div> }
-  </div>
+  </>
 }
 
 export const requiredValidator = (value?:string | number | readonly string[]) => !value ? "Required" : undefined;
